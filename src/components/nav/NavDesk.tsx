@@ -2,7 +2,7 @@ import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 
 export const NavDesk = () => {
   return (
-    <div className="flex flex-row  justify-between w-full px-7 overflow-y-auto">
+    <div className="flex flex-row  justify-between w-full px-7 pt-7 overflow-y-auto z-50">
       <div></div>
       <div className="flex flex-col w-1/3">
         <div>

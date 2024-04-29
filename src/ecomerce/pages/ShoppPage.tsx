@@ -1,10 +1,13 @@
 import { NavDesk } from "../../components"
+import { VideoBackground } from "../components"
 
 export const ShoppPage = () => {
   return (
     <>
-      <div>ShopPage</div>
       <NavDesk></NavDesk>
+
+      <VideoBackground></VideoBackground>
+    
     </>
   )
 }

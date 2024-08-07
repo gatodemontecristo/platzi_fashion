@@ -1,13 +1,14 @@
 import { NavDesk } from "../../components"
-import { VideoBackground } from "../components"
+import {   PromoSection, VideoBackground } from "../components"
+
+
 
 export const ShoppPage = () => {
   return (
     <>
       <NavDesk></NavDesk>
-
       <VideoBackground></VideoBackground>
-    
+        <PromoSection></PromoSection>
     </>
   )
 }

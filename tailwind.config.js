@@ -8,7 +8,18 @@ export default {
     fontFamily: {
       HelveticaFashion: ["HelveticaNeue", "Helvetica", "Arial", "sans-serif"],
     },
-    extend: {},
+    extend: {
+      backgroundColor: (theme) => ({
+        ...theme("colors"),
+        primary: "#000000",
+        secondary: "#8FA206",
+      }),
+      textColor: {
+        primary: "##FFFFFF",
+        secondary: "#8FA206",
+      },
+
+    },
   },
   plugins: [],
 }

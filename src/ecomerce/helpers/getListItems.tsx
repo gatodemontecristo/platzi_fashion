@@ -11,9 +11,9 @@ export const getListItems = async () => {
     
     try {
         const response = await fetch(url, options);
-        const movie = await response.json();
-        console.log("movie", movie);
-        return movie;
+        const platziCards = await response.json();
+        console.log("movie", platziCards);
+        return platziCards;
     } catch (error) {
         console.error(error);
         return {};

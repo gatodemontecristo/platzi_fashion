@@ -1,1 +1,1 @@
-export * from './useFetchMovieDetail';
+export * from './useFetchShopItems';

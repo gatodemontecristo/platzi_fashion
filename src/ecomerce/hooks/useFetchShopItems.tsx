@@ -3,12 +3,12 @@ import { getListItems } from "../helpers";
 
 
 export const useFetchMovieDetail = () => {
-    const [movie, setmovie] = useState({});
+    const [shopCollection, setShopCollection] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     const getDetails = async () => {
-        const newMovie = await getListItems();
-        setmovie(newMovie);
+        const newCollection = await getListItems();
+        setShopCollection(newCollection);
         setIsLoading(false);
       };
 
@@ -17,7 +17,7 @@ export const useFetchMovieDetail = () => {
       }, []);
 
       return {
-        movie,
+        shopCollection,
         isLoading
       }
 

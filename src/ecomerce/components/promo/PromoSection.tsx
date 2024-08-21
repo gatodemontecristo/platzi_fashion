@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+
 import { useFetchMovieDetail } from "../../hooks";
+import { ShopCard } from "../cards";
 
 export const PromoSection = () => {
   //useEffect(() => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    useFetchMovieDetail();
+   const {shopCollection} = useFetchMovieDetail();
   //}, []);
   return (
     <div className="relative mt-[100vh] flex items-center justify-center flex-col box-border">
@@ -49,6 +50,13 @@ export const PromoSection = () => {
       </div>
       <div className="w-full">
       <img className="w-full filter grayscale" src="../gallery/secondary01.jpg" alt="" />
+      </div>
+
+      <div className="flex flex-row gap-x-4 gap-y-12 flex-wrap px-[10%] justify-center">
+      {shopCollection.map(() => (
+        <ShopCard ></ShopCard>
+      ))
+      }
       </div>
     </div>
   );

@@ -20,7 +20,7 @@ export const useFetchMovieDetail = () => {
     }
   };
   useEffect(() => {
-    setTotalProducts(200); // Asigna el valor correcto aquí
+    setTotalProducts(200); 
   }, []);
 
   const [shopCollection, setShopCollection] = useState<CardProps[]>([]);

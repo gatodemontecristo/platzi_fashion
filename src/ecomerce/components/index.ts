@@ -1,2 +1,4 @@
-export * from './VideoBackground'
+
 export * from './promo'
+export * from './info'
+export * from './cards'

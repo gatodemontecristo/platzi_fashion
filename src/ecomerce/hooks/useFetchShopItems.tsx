@@ -1,24 +1,48 @@
 import { useEffect, useState } from "react";
 import { getListItems } from "../helpers";
-
+import { CardProps } from "../types";
 
 export const useFetchMovieDetail = () => {
-    const [shopCollection, setShopCollection] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalProducts, setTotalProducts] = useState(200);
+  const productsPerPage = 12;
+  const totalPages = Math.ceil(totalProducts / productsPerPage);
+  const offset = (currentPage - 1) * productsPerPage;
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
-    const getDetails = async () => {
-        const newCollection = await getListItems();
-        setShopCollection(newCollection);
-        setIsLoading(false);
-      };
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  useEffect(() => {
+    setTotalProducts(200); // Asigna el valor correcto aquí
+  }, []);
 
-      useEffect(() => {
-        getDetails();
-      }, []);
+  const [shopCollection, setShopCollection] = useState<CardProps[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-      return {
-        shopCollection,
-        isLoading
-      }
+  const getDetails = async () => {
+    setIsLoading(true);
+    const newCollection = await getListItems({ offset, productsPerPage });
+    setShopCollection(newCollection);
+    setIsLoading(false);
+  };
 
-}
+  useEffect(() => {
+    getDetails();
+  }, [currentPage]);
+
+  return {
+    currentPage,
+    totalPages,
+    handleNextPage,
+    handlePrevPage,
+    shopCollection,
+    isLoading,
+  };
+};

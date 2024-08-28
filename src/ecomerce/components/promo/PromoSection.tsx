@@ -1,12 +1,16 @@
-
 import { useFetchMovieDetail } from "../../hooks";
+import { CardProps } from "../../types";
 import { ShopCard } from "../cards";
 
 export const PromoSection = () => {
-  //useEffect(() => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-   const {shopCollection} = useFetchMovieDetail();
-  //}, []);
+  const {
+    currentPage,
+    totalPages,
+    handleNextPage,
+    handlePrevPage,
+    shopCollection,
+  } = useFetchMovieDetail();
+
   return (
     <div className="relative mt-[100vh] flex items-center justify-center flex-col box-border">
       <div className="border-8 border-black w-3/4 box-border relative mb-[220px]">
@@ -49,14 +53,28 @@ export const PromoSection = () => {
         </div>
       </div>
       <div className="w-full">
-      <img className="w-full filter grayscale" src="../gallery/secondary01.jpg" alt="" />
+        <img
+          className="w-full filter grayscale"
+          src="../gallery/secondary01.jpg"
+          alt=""
+        />
       </div>
 
       <div className="flex flex-row gap-x-4 gap-y-12 flex-wrap px-[10%] justify-center">
-      {shopCollection.map(() => (
-        <ShopCard ></ShopCard>
-      ))
-      }
+        {shopCollection.map((card: CardProps) => (
+          <ShopCard card={card}></ShopCard>
+        ))}
+      </div>
+      <div className="pagination">
+        <button onClick={handlePrevPage} disabled={currentPage === 1}>
+          Previous
+        </button>
+        <span>
+          Page {currentPage} of {totalPages}
+        </span>
+        <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+          Next
+        </button>
       </div>
     </div>
   );

@@ -14,6 +14,7 @@ export const PromoPage = () => {
     totalPages,
     handleNextPage,
     handlePrevPage,
+    handleCurrentPage,
     shopCollection,
   } = useFetchMovieDetail();
 
@@ -33,7 +34,7 @@ export const PromoPage = () => {
           ))}
         </div>
         <Pagination
-          {...{ currentPage, totalPages, handleNextPage, handlePrevPage }}
+          {...{ currentPage, totalPages, handleNextPage, handlePrevPage,handleCurrentPage }}
         ></Pagination>
       </div>
     </>

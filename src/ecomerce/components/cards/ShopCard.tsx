@@ -16,6 +16,9 @@ export const ShopCard = ({card}:ShopCardProps) => {
         <img
           className="w-full"
           src={card.image}
+          onError={(e) => {
+            (e.currentTarget as HTMLImageElement).src = "../default_image.png";
+          }}
           alt=""
         />
         <button className="absolute bottom-8 left-1/2 rounded-full bg-white bg-opacity-40 p-1">

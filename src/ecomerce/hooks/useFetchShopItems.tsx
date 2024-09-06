@@ -4,7 +4,7 @@ import { CardProps } from "../types";
 
 export const useFetchMovieDetail = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalProducts, setTotalProducts] = useState(200);
+  const [totalProducts, setTotalProducts] = useState(0);
   const productsPerPage = 12;
   const totalPages = Math.ceil(totalProducts / productsPerPage);
   const offset = (currentPage - 1) * productsPerPage;
@@ -19,18 +19,20 @@ export const useFetchMovieDetail = () => {
       setCurrentPage(currentPage - 1);
     }
   };
-  useEffect(() => {
-    setTotalProducts(200); 
-  }, []);
+
+  const handleCurrentPage = (page:number) => {
+      setCurrentPage(page);
+  };
 
   const [shopCollection, setShopCollection] = useState<CardProps[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const getDetails = async () => {
     setIsLoading(true);
-    const newCollection = await getListItems({ offset, productsPerPage });
-    setShopCollection(newCollection);
+    const {platziCards,sizePage} = await getListItems({ offset, productsPerPage });
+    setShopCollection(platziCards);
     setIsLoading(false);
+    setTotalProducts(sizePage); 
   };
 
   useEffect(() => {
@@ -42,6 +44,7 @@ export const useFetchMovieDetail = () => {
     totalPages,
     handleNextPage,
     handlePrevPage,
+    handleCurrentPage,
     shopCollection,
     isLoading,
   };

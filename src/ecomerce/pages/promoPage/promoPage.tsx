@@ -1,12 +1,12 @@
-import { Pagination, ShopCard } from "../../components/cards";
-import { useFetchMovieDetail } from "../../hooks";
-import { CardProps } from "../../types";
+import { Pagination, ShopCard } from '../../components/cards';
+import { useFetchMovieDetail } from '../../hooks';
+import { CardProps } from '../../types';
 import {
   InfoSection01,
   InfoSection02,
   InfoSection03,
-} from "../../components/info";
-import { BlackWhiteCover, VideoBackground } from "../../components";
+} from '../../components/info';
+import { BlackWhiteCover, VideoBackground } from '../../components';
 
 export const PromoPage = () => {
   const {
@@ -34,7 +34,13 @@ export const PromoPage = () => {
           ))}
         </div>
         <Pagination
-          {...{ currentPage, totalPages, handleNextPage, handlePrevPage,handleCurrentPage }}
+          {...{
+            currentPage,
+            totalPages,
+            handleNextPage,
+            handlePrevPage,
+            handleCurrentPage,
+          }}
         ></Pagination>
       </div>
     </>

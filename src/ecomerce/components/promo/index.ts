@@ -1,1 +1,3 @@
-export * from './PromoSection'
+
+export * from './VideoBackground'
+export * from './BlackWhiteCover'

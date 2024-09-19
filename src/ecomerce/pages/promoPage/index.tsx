@@ -1,1 +1,1 @@
-export * from './promoPage'
+export * from './PromoPage'

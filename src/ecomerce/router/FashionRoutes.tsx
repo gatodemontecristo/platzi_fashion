@@ -1,9 +1,9 @@
-import { Outlet } from "react-router-dom";
-import { NavDesk } from "../../components"
+import { Outlet } from 'react-router-dom';
+import { NavDesk } from '../../components';
 export const FashionRoutes = () => {
   return (
     <>
-        <NavDesk></NavDesk>
+      <NavDesk></NavDesk>
       <Outlet></Outlet>
     </>
   );

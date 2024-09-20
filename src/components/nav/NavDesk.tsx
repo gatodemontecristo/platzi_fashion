@@ -1,12 +1,48 @@
-import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import { ShoppingCartIcon } from '@heroicons/react/24/outline';
+import { useEffect, useState } from 'react';
 
 export const NavDesk = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  const handleScroll = () => {
+    if (window.scrollY > 50) {
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <div className="flex flex-row  justify-between w-full px-7 pt-7 overflow-y-auto z-50">
+    <div
+      className={`flex flex-row fixed top-0 left-0 justify-between w-full px-7 pt-7 overflow-y-auto z-999 pb-7 transition-colors duration-300 ${
+        isScrolled ? 'bg-white' : 'bg-transparent'
+      }`}
+    >
       <div></div>
       <div className="flex flex-col w-1/3">
-        <div>
-          <img src="platzi_logo.png" alt="" />
+        <div className="relative w-full h-36">
+          <img
+            src="platzi_logo2.png"
+            alt=""
+            className={`absolute inset-0 w-full h-full  transition-opacity duration-500 ${
+              isScrolled ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
+          <img
+            src="platzi_logo.png"
+            alt=""
+            className={`absolute inset-0 w-full h-full  transition-opacity duration-500 ${
+              isScrolled ? 'opacity-0' : 'opacity-100'
+            }`}
+          />
         </div>
         <ul className="list-none flex flex-row gap-6 font-light">
           <li>All</li>

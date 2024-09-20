@@ -22,13 +22,13 @@ export const PromoPage = () => {
     <>
       <VideoBackground></VideoBackground>
 
-      <div className="relative mt-[100vh] flex items-center justify-center flex-col box-border">
+      <div className="relative mt-[110vh] flex items-center justify-center flex-col box-border">
         <InfoSection01></InfoSection01>
         <InfoSection02></InfoSection02>
         <InfoSection03></InfoSection03>
         <BlackWhiteCover></BlackWhiteCover>
 
-        <div className="flex flex-row gap-x-4 gap-y-12 flex-wrap px-[10%] justify-center mt-10">
+        <div className="flex flex-row gap-x-4 gap-y-12 flex-wrap px-[10%] justify-center mt-10 -z-10">
           {shopCollection.map((card: CardProps) => (
             <ShopCard card={card}></ShopCard>
           ))}

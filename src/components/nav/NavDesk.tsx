@@ -28,7 +28,7 @@ export const NavDesk = () => {
     >
       <div></div>
       <div className="flex flex-col w-1/3">
-        <div className="relative w-full h-36">
+        <div className="relative w-full h-28">
           <img
             src="platzi_logo2.png"
             alt=""
@@ -56,7 +56,7 @@ export const NavDesk = () => {
       <div className="flex flex-row gap-4 font-light text-sm items-start justify-center">
         <input
           className="font-thin border-slate-950 border-solid border-2 h-9 w-60 px-4 text-right m-5"
-          placeholder="buscar"
+          placeholder="Search a product"
         ></input>
         <p>@platzi_fashion</p>
         <p>My Orders</p>

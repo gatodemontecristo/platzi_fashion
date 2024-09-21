@@ -7,6 +7,7 @@ import {
   InfoSection03,
 } from '../../components/info';
 import { BlackWhiteCover, VideoBackground } from '../../components';
+import { Spinner } from '../../../components/general';
 
 export const PromoPage = () => {
   const {
@@ -16,6 +17,7 @@ export const PromoPage = () => {
     handlePrevPage,
     handleCurrentPage,
     shopCollection,
+    isLoading,
   } = useFetchMovieDetail();
 
   return (
@@ -28,10 +30,18 @@ export const PromoPage = () => {
         <InfoSection03></InfoSection03>
         <BlackWhiteCover></BlackWhiteCover>
 
+        <h1 className="text-3xl font-light   text-black justify-center mb-10 mt-20">
+          Exclusive Products
+        </h1>
+
         <div className="flex flex-row gap-x-4 gap-y-12 flex-wrap px-[10%] justify-center mt-10 -z-10">
-          {shopCollection.map((card: CardProps) => (
-            <ShopCard card={card}></ShopCard>
-          ))}
+          {isLoading ? (
+            <Spinner></Spinner>
+          ) : (
+            shopCollection.map((card: CardProps) => (
+              <ShopCard card={card}></ShopCard>
+            ))
+          )}
         </div>
         <Pagination
           {...{

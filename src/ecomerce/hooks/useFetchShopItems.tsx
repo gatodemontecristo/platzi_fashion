@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { getListItems } from "../helpers";
-import { CardProps } from "../types";
+import { useEffect, useState } from 'react';
+import { getListItems } from '../helpers';
+import { CardProps } from '../types';
 
 export const useFetchMovieDetail = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,8 +20,8 @@ export const useFetchMovieDetail = () => {
     }
   };
 
-  const handleCurrentPage = (page:number) => {
-      setCurrentPage(page);
+  const handleCurrentPage = (page: number) => {
+    setCurrentPage(page);
   };
 
   const [shopCollection, setShopCollection] = useState<CardProps[]>([]);
@@ -29,10 +29,13 @@ export const useFetchMovieDetail = () => {
 
   const getDetails = async () => {
     setIsLoading(true);
-    const {platziCards,sizePage} = await getListItems({ offset, productsPerPage });
+    const { platziCards, sizePage } = await getListItems({
+      offset,
+      productsPerPage,
+    });
     setShopCollection(platziCards);
     setIsLoading(false);
-    setTotalProducts(sizePage); 
+    setTotalProducts(sizePage);
   };
 
   useEffect(() => {

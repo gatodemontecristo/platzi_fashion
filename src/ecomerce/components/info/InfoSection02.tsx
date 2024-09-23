@@ -1,6 +1,6 @@
 export const InfoSection02 = () => {
   return (
-    <div className="flex flex-row justify-center p-20 -z-10">
+    <div className="flex flex-row justify-center p-20 z-10">
       <div className="w-[45%]">
         <img src="../gallery/secondary02.jpeg" alt="" />
       </div>

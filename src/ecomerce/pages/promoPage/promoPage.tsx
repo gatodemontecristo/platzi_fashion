@@ -6,8 +6,13 @@ import {
   InfoSection02,
   InfoSection03,
 } from '../../components/info';
-import { BlackWhiteCover, VideoBackground } from '../../components';
+import {
+  BlackWhiteCover,
+  DetailProduct,
+  VideoBackground,
+} from '../../components';
 import { Spinner } from '../../../components/general';
+import { useState } from 'react';
 
 export const PromoPage = () => {
   const {
@@ -19,6 +24,17 @@ export const PromoPage = () => {
     shopCollection,
     isLoading,
   } = useFetchMovieDetail();
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleModal = () => {
+    setIsOpen(!isOpen);
+  };
+  const onClickCard = (card: CardProps) => {
+    setCardSelected(card);
+    setIsOpen(true);
+  };
+  const [cardSelected, setCardSelected] = useState<CardProps>();
 
   return (
     <>
@@ -34,12 +50,12 @@ export const PromoPage = () => {
           Exclusive Products
         </h1>
 
-        <div className="flex flex-row gap-x-4 gap-y-12 flex-wrap px-[10%] justify-center mt-10 -z-10">
+        <div className="flex flex-row gap-x-4 gap-y-12 flex-wrap px-[10%] justify-center mt-10 z-10">
           {isLoading ? (
             <Spinner></Spinner>
           ) : (
             shopCollection.map((card: CardProps) => (
-              <ShopCard card={card}></ShopCard>
+              <ShopCard card={card} setCardSelected={onClickCard}></ShopCard>
             ))
           )}
         </div>
@@ -52,6 +68,9 @@ export const PromoPage = () => {
             handleCurrentPage,
           }}
         ></Pagination>
+        <DetailProduct
+          {...{ isOpen, toggleModal, cardSelected }}
+        ></DetailProduct>
       </div>
     </>
   );

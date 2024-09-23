@@ -22,7 +22,7 @@ export const NavDesk = () => {
 
   return (
     <div
-      className={`flex flex-row fixed top-0 left-0 justify-between w-full px-7 pt-7 overflow-y-auto z-999 pb-7 transition-colors duration-300 ${
+      className={`flex flex-row fixed top-0 left-0 justify-between w-full px-7 pt-7 overflow-y-auto z-20 pb-7 transition-colors duration-300 ${
         isScrolled ? 'bg-white' : 'bg-transparent'
       }`}
     >

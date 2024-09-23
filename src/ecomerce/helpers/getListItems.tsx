@@ -1,25 +1,34 @@
-import { CollectionResponseProps } from "../types";
+import { CollectionResponseProps } from '../types';
 
-export const getListItems = async ({offset,productsPerPage}:{offset:number,productsPerPage:number}) => {
-  const url01 = `https://api.escuelajs.co/api/v1/products?offset=${offset}&limit=${productsPerPage}`;
-  const url02 = `https://api.escuelajs.co/api/v1/products`;
+export const getListItems = async ({
+  offset,
+  productsPerPage,
+  currentCategory,
+}: {
+  offset: number;
+  productsPerPage: number;
+  currentCategory?: number;
+}) => {
+  console.log('Category', currentCategory);
+  const categoryPage = currentCategory ? `&categoryId=${currentCategory}` : '';
+  const url01 = `https://api.escuelajs.co/api/v1/products?offset=${offset}&limit=${productsPerPage}${categoryPage}`;
+  const url02 = `https://api.escuelajs.co/api/v1/products${categoryPage && '?' + categoryPage}`;
   const options = {
-    method: "GET",
+    method: 'GET',
     headers: {
-      accept: "application/json",
+      accept: 'application/json',
     },
   };
 
   try {
-
     const [response1, response2] = await Promise.all([
       fetch(url01, options), // URL de la primera API
-      fetch(url02, options) // URL de la segunda API
+      fetch(url02, options), // URL de la segunda API
     ]);
 
     const resultsPage = await response1.json();
     const resultsSize = await response2.json();
-    const sizePage = resultsSize.length; 
+    const sizePage = resultsSize.length;
     const platziCards = resultsPage.map(
       ({
         title,
@@ -27,27 +36,21 @@ export const getListItems = async ({offset,productsPerPage}:{offset:number,produ
         description,
         id,
         images,
+        category,
       }: CollectionResponseProps) => ({
         title,
         price,
         description,
         id,
-        image: images[0] || "",
-      })
+        image: images[0] || '',
+        category: category.name || '',
+      }),
     );
 
-    // const platziCards = dataMap.map((product:CollectionResponseProps) => ({
-    //     title: product.title,
-    //     price: product.price,
-    //     description: product.description,
-    //     id: product.id,
-    //     image: product.category?.image || '',
-    // }));
-
-    console.log("movie", platziCards);
-    return {platziCards,sizePage}
+    console.log('movie', platziCards);
+    return { platziCards, sizePage };
   } catch (error) {
-    console.error(error); 
+    console.error(error);
     return {};
   }
 };

@@ -3,12 +3,16 @@ import { CollectionResponseProps } from '../types';
 export const getListItems = async ({
   offset,
   productsPerPage,
+  currentCategory,
 }: {
   offset: number;
   productsPerPage: number;
+  currentCategory?: number;
 }) => {
-  const url01 = `https://api.escuelajs.co/api/v1/products?offset=${offset}&limit=${productsPerPage}`;
-  const url02 = `https://api.escuelajs.co/api/v1/products`;
+  console.log('Category', currentCategory);
+  const categoryPage = currentCategory ? `&categoryId=${currentCategory}` : '';
+  const url01 = `https://api.escuelajs.co/api/v1/products?offset=${offset}&limit=${productsPerPage}${categoryPage}`;
+  const url02 = `https://api.escuelajs.co/api/v1/products${categoryPage && '?' + categoryPage}`;
   const options = {
     method: 'GET',
     headers: {
@@ -42,14 +46,6 @@ export const getListItems = async ({
         category: category.name || '',
       }),
     );
-
-    // const platziCards = dataMap.map((product:CollectionResponseProps) => ({
-    //     title: product.title,
-    //     price: product.price,
-    //     description: product.description,
-    //     id: product.id,
-    //     image: product.category?.image || '',
-    // }));
 
     console.log('movie', platziCards);
     return { platziCards, sizePage };

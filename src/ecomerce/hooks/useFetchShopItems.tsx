@@ -4,6 +4,7 @@ import { CardProps } from '../types';
 
 export const useFetchMovieDetail = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentCategory, setCurrentCategory] = useState<number | undefined>();
   const [totalProducts, setTotalProducts] = useState(0);
   const productsPerPage = 12;
   const totalPages = Math.ceil(totalProducts / productsPerPage);
@@ -24,15 +25,23 @@ export const useFetchMovieDetail = () => {
     setCurrentPage(page);
   };
 
+  const handleCurrentCategory = (category: number | undefined) => {
+    console.log(category);
+    setCurrentCategory(category);
+  };
+
   const [shopCollection, setShopCollection] = useState<CardProps[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const getDetails = async () => {
     setIsLoading(true);
-    const { platziCards, sizePage } = await getListItems({
+    const params = {
       offset,
       productsPerPage,
-    });
+      currentCategory,
+    };
+    console.log(params);
+    const { platziCards, sizePage } = await getListItems(params);
     setShopCollection(platziCards);
     setIsLoading(false);
     setTotalProducts(sizePage);
@@ -40,7 +49,7 @@ export const useFetchMovieDetail = () => {
 
   useEffect(() => {
     getDetails();
-  }, [currentPage]);
+  }, [currentPage, currentCategory]);
 
   return {
     currentPage,
@@ -50,5 +59,6 @@ export const useFetchMovieDetail = () => {
     handleCurrentPage,
     shopCollection,
     isLoading,
+    handleCurrentCategory,
   };
 };

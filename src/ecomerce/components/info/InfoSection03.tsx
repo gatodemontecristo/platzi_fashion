@@ -1,6 +1,6 @@
 export const InfoSection03 = () => {
   return (
-    <div className="flex flex-row justify-center p-20 -z-10">
+    <div className="flex flex-row justify-center p-20 z-10">
       <div className="w-[45%] p-10 flex flex-col gap-10">
         <p className="text-lg font-light">
           Fashion where creativity becomes couture trends define eras, and

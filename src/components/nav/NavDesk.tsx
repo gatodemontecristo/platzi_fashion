@@ -1,6 +1,7 @@
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
-import { useFetchMovieDetail } from '../../ecomerce/hooks';
+import { menuNavItems, menuNavItemsProps } from '../../ecomerce/utils';
+import { useShopFilterStore } from '../../stores';
 
 export const NavDesk = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -20,7 +21,18 @@ export const NavDesk = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-  const { handleCurrentCategory } = useFetchMovieDetail();
+
+  const { categoryValue, setCategoryValue, setCurrentPage, getListItems } =
+    useShopFilterStore();
+  const handleCurrentCategory = (category: number) => {
+    setCurrentPage(1);
+    setCategoryValue(category);
+  };
+
+  useEffect(() => {
+    getListItems();
+  }, [categoryValue]);
+
   return (
     <div
       className={`flex flex-row fixed top-0 left-0 justify-between w-full px-7 pt-7 overflow-y-auto z-20 pb-7 transition-colors duration-300 ${
@@ -45,26 +57,15 @@ export const NavDesk = () => {
             }`}
           />
         </div>
-        <ul className="list-none flex flex-row gap-6 font-light">
-          <a onClick={() => handleCurrentCategory(undefined)}>
-            {' '}
-            <li>All</li>
-          </a>
-          <button className="h-fi" onClick={() => handleCurrentCategory(2)}>
-            Electronics
-          </button>
-          <button className="h-fi" onClick={() => handleCurrentCategory(3)}>
-            Furniture
-          </button>
-          <button className="h-fi" onClick={() => handleCurrentCategory(4)}>
-            Shoes
-          </button>
-          <button className="h-fi" onClick={() => handleCurrentCategory(5)}>
-            Miscellaneous
-          </button>
-          <button className="h-fi" onClick={() => handleCurrentCategory(1)}>
-            Others
-          </button>
+        <ul className="list-none flex flex-row gap-6 font-light text-lg		">
+          {menuNavItems.map((item: menuNavItemsProps) => (
+            <button
+              className={`h-fi ${categoryValue === item.category && 'font-bold underline underline-offset-4'}`}
+              onClick={() => handleCurrentCategory(item.category)}
+            >
+              {item.tittle}
+            </button>
+          ))}
         </ul>
       </div>
       <div className="flex flex-row gap-4 font-light text-sm items-start justify-center">

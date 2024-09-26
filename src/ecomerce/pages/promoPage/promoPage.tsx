@@ -1,5 +1,4 @@
 import { Pagination, ShopCard } from '../../components/cards';
-import { useFetchMovieDetail } from '../../hooks';
 import { CardProps } from '../../types';
 import {
   InfoSection01,
@@ -12,10 +11,11 @@ import {
   VideoBackground,
 } from '../../components';
 import { Spinner } from '../../../components/general';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useShopFilterStore } from '../../../stores';
 
 export const PromoPage = () => {
-  const {
+  /* const {
     currentPage,
     totalPages,
     handleNextPage,
@@ -23,8 +23,7 @@ export const PromoPage = () => {
     handleCurrentPage,
     shopCollection,
     isLoading,
-  } = useFetchMovieDetail();
-
+  } = useFetchMovieDetail();*/
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleModal = () => {
@@ -35,6 +34,34 @@ export const PromoPage = () => {
     setIsOpen(true);
   };
   const [cardSelected, setCardSelected] = useState<CardProps>();
+
+  const {
+    currentPage,
+    setCurrentPage,
+    totalPages,
+    shopCollection,
+    isLoading,
+    getListItems,
+  } = useShopFilterStore();
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleCurrentPage = (page: number) => {
+    setCurrentPage(page);
+  };
+  useEffect(() => {
+    getListItems();
+  }, [currentPage]);
 
   return (
     <>

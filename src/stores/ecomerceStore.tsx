@@ -11,6 +11,7 @@ export interface ShopFilterStoreProps {
   totalSize: number;
   totalPages: number;
   isLoading: boolean;
+  inputValue: string;
   setSearchValue: (searchValue: string) => void;
   setCategoryValue: (categoryValue: number) => void;
   setCurrentPage: (currentPage: number) => void;
@@ -18,6 +19,7 @@ export interface ShopFilterStoreProps {
   setTotalSize: (totalSize: number) => void;
   setTotalPages: (totalPages: number) => void;
   setIsLoading: (isLoading: boolean) => void;
+  setInputValue: (inputValue: string) => void;
   getListItems: () => Promise<void>;
 }
 
@@ -32,6 +34,7 @@ export const useShopFilterStore = create(
       totalSize: 0,
       totalPages: 0,
       isLoading: false,
+      inputValue: '',
       setSearchValue: (value) => set({ searchValue: value }),
       setCategoryValue: (value) => set({ categoryValue: value }),
       setCurrentPage: (value) => set({ currentPage: value }),
@@ -39,13 +42,16 @@ export const useShopFilterStore = create(
       setTotalSize: (value) => set({ totalSize: value }),
       setTotalPages: (value) => set({ totalPages: value }),
       setIsLoading: (value) => set({ isLoading: value }),
+      setInputValue: (value) => set({ inputValue: value }),
       getListItems: async () => {
         get().setIsLoading(true);
         const categoryPage =
           get().categoryValue !== 0 ? `&categoryId=${get().categoryValue}` : '';
+        const inputValueSearch =
+          get().inputValue.length !== 0 ? `&title=${get().inputValue}` : '';
         const offset = (get().currentPage - 1) * get().productsPerPage;
-        const url01 = `https://api.escuelajs.co/api/v1/products?offset=${offset}&limit=${get().productsPerPage}${categoryPage}`;
-        const url02 = `https://api.escuelajs.co/api/v1/products${categoryPage && '?' + categoryPage}`;
+        const url01 = `https://api.escuelajs.co/api/v1/products?offset=${offset}&limit=${get().productsPerPage}${categoryPage}${inputValueSearch}`;
+        const url02 = `https://api.escuelajs.co/api/v1/products?${categoryPage}${inputValueSearch}`;
         const options = {
           method: 'GET',
           headers: {

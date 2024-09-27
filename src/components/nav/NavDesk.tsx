@@ -22,8 +22,14 @@ export const NavDesk = () => {
     };
   }, []);
 
-  const { categoryValue, setCategoryValue, setCurrentPage, getListItems } =
-    useShopFilterStore();
+  const {
+    categoryValue,
+    setCategoryValue,
+    setCurrentPage,
+    getListItems,
+    inputValue,
+    setInputValue,
+  } = useShopFilterStore();
   const handleCurrentCategory = (category: number) => {
     setCurrentPage(1);
     setCategoryValue(category);
@@ -32,6 +38,16 @@ export const NavDesk = () => {
   useEffect(() => {
     getListItems();
   }, [categoryValue]);
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter' && inputValue.length !== 0) {
+      getListItems();
+    }
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+  };
 
   return (
     <div
@@ -70,8 +86,11 @@ export const NavDesk = () => {
       </div>
       <div className="flex flex-row gap-4 font-light text-sm items-start justify-center">
         <input
+          value={inputValue}
           className="font-thin border-slate-950 border-solid border-2 h-9 w-60 px-4 text-right m-5"
           placeholder="Search a product"
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
         ></input>
         <p>@platzi_fashion</p>
         <p>My Orders</p>

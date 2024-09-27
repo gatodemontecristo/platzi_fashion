@@ -11,19 +11,10 @@ import {
   VideoBackground,
 } from '../../components';
 import { Spinner } from '../../../components/general';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useShopFilterStore } from '../../../stores';
 
 export const PromoPage = () => {
-  /* const {
-    currentPage,
-    totalPages,
-    handleNextPage,
-    handlePrevPage,
-    handleCurrentPage,
-    shopCollection,
-    isLoading,
-  } = useFetchMovieDetail();*/
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleModal = () => {
@@ -42,6 +33,7 @@ export const PromoPage = () => {
     shopCollection,
     isLoading,
     getListItems,
+    categoryValue,
   } = useShopFilterStore();
 
   const handleNextPage = () => {
@@ -62,6 +54,11 @@ export const PromoPage = () => {
   useEffect(() => {
     getListItems();
   }, [currentPage]);
+  useEffect(() => {
+    sectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [categoryValue]);
+
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   return (
     <>
@@ -73,7 +70,10 @@ export const PromoPage = () => {
         <InfoSection03></InfoSection03>
         <BlackWhiteCover></BlackWhiteCover>
 
-        <h1 className="text-3xl font-light   text-black justify-center mb-10 mt-20">
+        <h1
+          ref={sectionRef}
+          className="text-3xl font-light   text-black justify-center mb-10 mt-20"
+        >
           Exclusive Products
         </h1>
 

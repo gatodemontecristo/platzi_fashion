@@ -20,8 +20,8 @@ export const ShopCard = ({ card, setCardSelected }: ShopCardProps) => {
             alt=""
           />
         </a>
-        <button className="absolute bottom-8 left-1/2 rounded-full bg-white bg-opacity-40 p-1">
-          <PlusIcon className="w-4 h-4 text-gray-600" />
+        <button className="absolute bottom-8 left-1/2 rounded-full bg-white bg-opacity-40 p-1 hover:bg-white ransition-all duration-300">
+          <PlusIcon className="w-4 h-4  font-bold text-gray-200 hover:text-black" />
         </button>
       </div>
       <div className="flex flex-col">

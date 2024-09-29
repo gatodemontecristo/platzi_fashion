@@ -40,13 +40,18 @@ export const NavDesk = () => {
   }, [categoryValue]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && inputValue.length !== 0) {
+    if (event.key === 'Enter') {
       getListItems();
     }
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
+  };
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
   };
 
   return (
@@ -97,9 +102,34 @@ export const NavDesk = () => {
         <p>My Account</p>
         <button className="h-fit">Sign In</button>
 
-        <button className="h-fi">
+        <button className="h-fi" onClick={toggleModal}>
           <ShoppingCartIcon className="h-6 w-6 fill-curren" />
         </button>
+      </div>
+
+      {/* Modal que aparece debajo del botón */}
+
+      <div>
+        <div
+          className={`fixed right-0 top-16 w-1/4 h-full shadow-lg bg-white border-gray-950 border-2   transform transition-transform duration-500 ease-in-out z-50
+          ${isModalOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        >
+          <div className="p-4">
+            <h3 className="text-lg font-semibold">Carrito</h3>
+            <p>No hay artículos en el carrito.</p>
+          </div>
+          <div className="p-4 border-t border-gray-200">
+            <button className="bg-blue-500 text-white px-4 py-2 rounded w-full">
+              Ir al checkout
+            </button>
+          </div>
+        </div>
+        {isModalOpen && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-40"
+            onClick={toggleModal} // Cerrar el modal al hacer clic fuera
+          ></div>
+        )}
       </div>
     </div>
   );

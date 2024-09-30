@@ -106,3 +106,69 @@ export const useShopFilterStore = create(
     },
   ),
 );
+
+export interface shopCardOrderItemProps extends CardProps {
+  amount: number;
+}
+export interface useShopCarStoreProps {
+  shopCardOrder: shopCardOrderItemProps[];
+  addItem: (product: CardProps) => void;
+  removeItem: (id: number) => void;
+  updateItem: (amount: number, id: number) => void;
+}
+export const useShopCarStore = create(
+  persist<useShopCarStoreProps>(
+    (set, get) => ({
+      shopCardOrder: [],
+      addItem: (product) => {
+        set((state) => {
+          const existingProduct = state.shopCardOrder.find(
+            (item) => item.id === product.id,
+          );
+          if (existingProduct) {
+            return {
+              shopCardOrder: state.shopCardOrder.map((item) =>
+                item.id === product.id
+                  ? { ...item, amount: item.amount + 1 }
+                  : item,
+              ),
+            };
+          }
+          return {
+            shopCardOrder: [...state.shopCardOrder, { ...product, amount: 1 }],
+          };
+        });
+      },
+      removeItem: (id) => {
+        set((state) => {
+          return {
+            shopCardOrder: state.shopCardOrder.filter((item) => item.id !== id),
+          };
+        });
+      },
+      updateItem: (amount, id) => {
+        set((state) => {
+          return {
+            shopCardOrder: state.shopCardOrder.map((item) =>
+              item.id === id ? { ...item, amount: amount } : item,
+            ),
+          };
+        });
+      },
+
+      /*  const existingProductIndex = get().shopCardOrder.findIndex(
+          (item) => item.id === product.id,
+        );
+        if (existingProductIndex !== -1) {
+          get().shopCardOrder[existingProductIndex].amount += 1;
+          return;
+        }
+        [...get().shopCardOrder, { ...product, quantity: 1 }];
+        return;
+      },*/
+    }),
+    {
+      name: 'shopcar-store',
+    },
+  ),
+);

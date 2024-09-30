@@ -3,9 +3,10 @@ import { BookmarkIcon, PlusIcon } from '@heroicons/react/24/outline';
 interface ShopCardProps {
   card: CardProps;
   setCardSelected: (card: CardProps) => void;
+  addItem: (product: CardProps) => void;
 }
 
-export const ShopCard = ({ card, setCardSelected }: ShopCardProps) => {
+export const ShopCard = ({ card, setCardSelected, addItem }: ShopCardProps) => {
   return (
     <div className="flex flex-col w-[20%]">
       <div className="relative">
@@ -20,8 +21,11 @@ export const ShopCard = ({ card, setCardSelected }: ShopCardProps) => {
             alt=""
           />
         </a>
-        <button className="absolute bottom-8 left-1/2 rounded-full bg-white bg-opacity-40 p-1">
-          <PlusIcon className="w-4 h-4 text-gray-600" />
+        <button
+          className="absolute bottom-8 left-1/2 rounded-full bg-white bg-opacity-40 p-1 hover:bg-white ransition-all duration-300"
+          onClick={() => addItem(card)}
+        >
+          <PlusIcon className="w-4 h-4  font-bold text-gray-200 hover:text-black" />
         </button>
       </div>
       <div className="flex flex-col">

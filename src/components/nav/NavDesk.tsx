@@ -2,6 +2,7 @@ import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 import { menuNavItems, menuNavItemsProps } from '../../ecomerce/utils';
 import { useShopFilterStore } from '../../stores';
+import { ShopCarOrder } from '../../ecomerce/components';
 
 export const NavDesk = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -40,13 +41,18 @@ export const NavDesk = () => {
   }, [categoryValue]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && inputValue.length !== 0) {
+    if (event.key === 'Enter') {
       getListItems();
     }
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
+  };
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
   };
 
   return (
@@ -97,10 +103,13 @@ export const NavDesk = () => {
         <p>My Account</p>
         <button className="h-fit">Sign In</button>
 
-        <button className="h-fi">
+        <button className="h-fi" onClick={toggleModal}>
           <ShoppingCartIcon className="h-6 w-6 fill-curren" />
         </button>
       </div>
+
+      {/* Modal que aparece debajo del botón */}
+      <ShopCarOrder {...{ isModalOpen, toggleModal }}></ShopCarOrder>
     </div>
   );
 };

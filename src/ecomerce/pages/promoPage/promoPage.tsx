@@ -12,7 +12,7 @@ import {
 } from '../../components';
 import { Spinner } from '../../../components/general';
 import { useEffect, useRef, useState } from 'react';
-import { useShopFilterStore } from '../../../stores';
+import { useShopCarStore, useShopFilterStore } from '../../../stores';
 
 export const PromoPage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -60,6 +60,8 @@ export const PromoPage = () => {
 
   const sectionRef = useRef<HTMLDivElement>(null);
 
+  const { addItem } = useShopCarStore();
+
   return (
     <>
       <VideoBackground></VideoBackground>
@@ -82,7 +84,11 @@ export const PromoPage = () => {
             <Spinner></Spinner>
           ) : (
             shopCollection.map((card: CardProps) => (
-              <ShopCard card={card} setCardSelected={onClickCard}></ShopCard>
+              <ShopCard
+                card={card}
+                setCardSelected={onClickCard}
+                addItem={addItem}
+              ></ShopCard>
             ))
           )}
         </div>

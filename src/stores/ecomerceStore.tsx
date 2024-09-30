@@ -112,7 +112,7 @@ export interface shopCardOrderItemProps extends CardProps {
 }
 export interface useShopCarStoreProps {
   shopCardOrder: shopCardOrderItemProps[];
-  addItem: (product: shopCardOrderItemProps) => void;
+  addItem: (product: CardProps) => void;
   removeItem: (id: number) => void;
   updateItem: (amount: number, id: number) => void;
 }

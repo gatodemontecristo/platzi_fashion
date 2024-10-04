@@ -118,7 +118,7 @@ export interface useShopCarStoreProps {
 }
 export const useShopCarStore = create(
   persist<useShopCarStoreProps>(
-    (set, get) => ({
+    (set) => ({
       shopCardOrder: [],
       addItem: (product) => {
         set((state) => {

@@ -13,18 +13,16 @@ export const ShopCarOrder = ({
   toggleModal,
 }: ShopCarOrderProps) => {
   const { shopCardOrder, updateItem, removeItem } = useShopCarStore();
-
   const onUpdateAmount = (item: shopCardOrderItemProps, type: '+' | '-') => {
     const newAmount = type === '+' ? item.amount + 1 : item.amount - 1;
     if (newAmount >= 1) {
       updateItem(newAmount, item.id);
     }
   };
-
   const notyf = new Notyf();
   const onRemoveFunction = (id: number) => {
     removeItem(id);
-    notyf.success('The product has been removed from the shopping cart.');
+    notyf.error('The product has been removed from the shopping cart.');
   };
 
   return (
@@ -49,7 +47,8 @@ export const ShopCarOrder = ({
                 {shopCardOrder.map((item: shopCardOrderItemProps) => (
                   <ItemShopCar
                     key={nanoid()}
-                    {...{ item, onUpdateAmount, onRemoveFunction }}
+                    onRemoveFunction={onRemoveFunction}
+                    {...{ item, onUpdateAmount }}
                   ></ItemShopCar>
                 ))}
               </div>

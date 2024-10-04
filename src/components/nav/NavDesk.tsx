@@ -1,7 +1,7 @@
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 import { menuNavItems, menuNavItemsProps } from '../../ecomerce/utils';
-import { useShopFilterStore } from '../../stores';
+import { useShopCarStore, useShopFilterStore } from '../../stores';
 import { ShopCarOrder } from '../../ecomerce/components';
 import { nanoid } from 'nanoid';
 
@@ -56,6 +56,8 @@ export const NavDesk = () => {
     setIsModalOpen(!isModalOpen);
   };
 
+  const { shopCardOrder } = useShopCarStore();
+
   return (
     <div
       className={`flex flex-row fixed top-0 left-0 justify-between w-full px-7 pt-7 overflow-y-auto z-20 pb-7 transition-colors duration-300 ${
@@ -105,9 +107,17 @@ export const NavDesk = () => {
         <p>My Account</p>
         <button className="h-fit">Sign In</button>
 
-        <button className="h-fi" onClick={toggleModal}>
-          <ShoppingCartIcon className="h-6 w-6 fill-curren" />
-        </button>
+        <div className="relative">
+          <button className="h-fi" onClick={toggleModal}>
+            <ShoppingCartIcon className="h-6 w-6 fill-curren" />
+          </button>
+          {/* Contador de notificaciones */}
+          {shopCardOrder.length > 0 && (
+            <span className="absolute top-[-15px] right-[-15px] inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-500 rounded-full">
+              {shopCardOrder.length}
+            </span>
+          )}
+        </div>
       </div>
 
       {/* Modal que aparece debajo del botón */}

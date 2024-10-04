@@ -12,7 +12,13 @@ export const ItemShopCar = ({
 }: ItemShopCarProps) => {
   return (
     <div className="flex flex-row  divide-x divide-gray-500 border border-gray-500">
-      <img className="w-2/5" src={item.image}></img>
+      <img
+        className="w-2/5"
+        src={item.image}
+        onError={(e) => {
+          (e.currentTarget as HTMLImageElement).src = '../default_image.png';
+        }}
+      ></img>
       <div className="flex flex-col w-2/5 justify-between p-2">
         <p className="font-light text-[11px] uppercase">{item.title}</p>
         <span className="w-auto self-start bg-gray-400 text-white text-[11px] font-light px-3 py-1 rounded-full">

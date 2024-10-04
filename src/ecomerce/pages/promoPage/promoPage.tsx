@@ -13,6 +13,8 @@ import {
 import { Spinner } from '../../../components/general';
 import { useEffect, useRef, useState } from 'react';
 import { useShopCarStore, useShopFilterStore } from '../../../stores';
+import { nanoid } from 'nanoid';
+import { Notyf } from 'notyf';
 
 export const PromoPage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -61,6 +63,12 @@ export const PromoPage = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const { addItem } = useShopCarStore();
+  const notyf = new Notyf();
+
+  const addItemFunction = (product: CardProps) => {
+    addItem(product);
+    notyf.success('The product has been added to your shopping cart.');
+  };
 
   return (
     <>
@@ -85,9 +93,10 @@ export const PromoPage = () => {
           ) : (
             shopCollection.map((card: CardProps) => (
               <ShopCard
+                key={nanoid()}
                 card={card}
                 setCardSelected={onClickCard}
-                addItem={addItem}
+                addItem={addItemFunction}
               ></ShopCard>
             ))
           )}

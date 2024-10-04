@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { menuNavItems, menuNavItemsProps } from '../../ecomerce/utils';
 import { useShopFilterStore } from '../../stores';
 import { ShopCarOrder } from '../../ecomerce/components';
+import { nanoid } from 'nanoid';
 
 export const NavDesk = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -82,6 +83,7 @@ export const NavDesk = () => {
         <ul className="list-none flex flex-row gap-6 font-light text-lg		">
           {menuNavItems.map((item: menuNavItemsProps) => (
             <button
+              key={nanoid()}
               className={`h-fi ${categoryValue === item.category && 'font-bold underline underline-offset-4'}`}
               onClick={() => handleCurrentCategory(item.category)}
             >

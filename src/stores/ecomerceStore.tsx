@@ -86,7 +86,6 @@ export const useShopFilterStore = create(
             }),
           );
 
-          console.log('movie', platziCards);
           const totalPages = Math.ceil(sizePage / get().productsPerPage);
           get().setShopCollection(platziCards);
           get().setTotalSize(sizePage);
@@ -118,7 +117,7 @@ export interface useShopCarStoreProps {
 }
 export const useShopCarStore = create(
   persist<useShopCarStoreProps>(
-    (set, get) => ({
+    (set) => ({
       shopCardOrder: [],
       addItem: (product) => {
         set((state) => {

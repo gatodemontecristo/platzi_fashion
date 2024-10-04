@@ -1,6 +1,6 @@
 import { shopCardOrderItemProps } from '../../../stores';
 
-interface itemShopCarProps {
+interface ItemShopCarProps {
   item: shopCardOrderItemProps;
   onUpdateAmount: (item: shopCardOrderItemProps, type: '+' | '-') => void;
   onRemoveFunction: (id: number) => void;
@@ -9,7 +9,7 @@ export const ItemShopCar = ({
   item,
   onUpdateAmount,
   onRemoveFunction,
-}: itemShopCarProps) => {
+}: ItemShopCarProps) => {
   return (
     <div className="flex flex-row  divide-x divide-gray-500 border border-gray-500">
       <img className="w-2/5" src={item.image}></img>

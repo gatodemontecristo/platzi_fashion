@@ -86,7 +86,6 @@ export const useShopFilterStore = create(
             }),
           );
 
-          console.log('movie', platziCards);
           const totalPages = Math.ceil(sizePage / get().productsPerPage);
           get().setShopCollection(platziCards);
           get().setTotalSize(sizePage);

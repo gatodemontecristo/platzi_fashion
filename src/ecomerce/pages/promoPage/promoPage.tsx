@@ -57,7 +57,7 @@ export const PromoPage = () => {
     getListItems();
   }, [currentPage]);
   useEffect(() => {
-    sectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+    onScrollToItems();
   }, [categoryValue]);
 
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -70,9 +70,13 @@ export const PromoPage = () => {
     notyf.success('The product has been added to your shopping cart.');
   };
 
+  const onScrollToItems = () => {
+    sectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <>
-      <VideoBackground></VideoBackground>
+      <VideoBackground {...{ onScrollToItems }}></VideoBackground>
 
       <div className="relative mt-[110vh] flex items-center justify-center flex-col box-border">
         <InfoSection01></InfoSection01>

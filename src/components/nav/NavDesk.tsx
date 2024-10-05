@@ -1,12 +1,17 @@
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 import { menuNavItems, menuNavItemsProps } from '../../ecomerce/utils';
-import { useShopCarStore, useShopFilterStore } from '../../stores';
+import {
+  useNavBarStore,
+  useShopCarStore,
+  useShopFilterStore,
+} from '../../stores';
 import { ShopCarOrder } from '../../ecomerce/components';
 import { nanoid } from 'nanoid';
 
 export const NavDesk = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const { setMenuHeight } = useNavBarStore();
 
   const handleScroll = () => {
     if (window.scrollY > 50) {
@@ -21,6 +26,21 @@ export const NavDesk = () => {
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    const menuElement = document.getElementById('myMenu');
+    const updateMenuHeight = () => {
+      if (menuElement) {
+        setMenuHeight(menuElement.offsetHeight);
+      }
+    };
+    updateMenuHeight();
+    window.addEventListener('resize', updateMenuHeight);
+
+    return () => {
+      window.removeEventListener('resize', updateMenuHeight);
     };
   }, []);
 
@@ -60,6 +80,7 @@ export const NavDesk = () => {
 
   return (
     <div
+      id="myMenu"
       className={`flex flex-row fixed top-0 left-0 justify-between w-full px-7 pt-7 overflow-y-auto z-20 pb-7 transition-colors duration-300 ${
         isScrolled ? 'bg-white' : 'bg-transparent'
       }`}

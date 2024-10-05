@@ -171,3 +171,11 @@ export const useShopCarStore = create(
     },
   ),
 );
+export interface NavBarStoreProps {
+  menuHeight: number;
+  setMenuHeight: (height: number) => void;
+}
+export const useNavBarStore = create<NavBarStoreProps>((set) => ({
+  menuHeight: 0,
+  setMenuHeight: (height) => set({ menuHeight: height }),
+}));

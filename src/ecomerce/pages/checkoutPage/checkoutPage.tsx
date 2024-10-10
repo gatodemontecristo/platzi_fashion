@@ -16,7 +16,14 @@ import {
 } from '@heroicons/react/24/solid';
 import { ShoppingBagIcon } from '@heroicons/react/24/solid';
 import { nanoid } from 'nanoid';
-import { priceFormat } from '../../utils';
+import {
+  handleCvvChange,
+  handleInputCardChange,
+  handleInputDateChange,
+  handleValueChange,
+  priceFormat,
+} from '../../utils';
+import { InputIcon, InputMini } from '../../components';
 
 export const CheckoutPage = () => {
   const [selectedOption, setSelectedOption] = useState<string>('option1');
@@ -34,43 +41,6 @@ export const CheckoutPage = () => {
 
   const { menuHeight } = useNavBarStore();
 
-  const [expiryDate, setExpiryDate] = useState('');
-
-  const handleInputDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value.replace(/\D/g, ''); // Solo permitir números
-
-    if (value.length > 4) {
-      value = value.slice(0, 4); // Limitar la longitud a 4 caracteres (MMYY)
-    }
-
-    if (value.length >= 2) {
-      value = `${value.slice(0, 2)}/${value.slice(2)}`; // Formatear como MM/YY
-    }
-
-    setExpiryDate(value);
-  };
-
-  const [cardNumber, setCardNumber] = useState('');
-
-  const handleInputCardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value.replace(/\D/g, ''); // Elimina caracteres no numéricos
-
-    if (value.length > 16) {
-      value = value.slice(0, 16); // Limitar a 16 dígitos
-    }
-
-    // Agregar espacios cada 4 dígitos (formato de tarjeta de crédito)
-    value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
-
-    setCardNumber(value);
-  };
-
-  const [cvv, setCvv] = useState('');
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, ''); // Solo permite números
-    setCvv(value.slice(0, 4)); // Limita a 4 dígitos como máximo
-  };
   return (
     <div
       className="flex flex-row mx-[10%]  gap-8 mb-20 mt-10"
@@ -118,18 +88,16 @@ export const CheckoutPage = () => {
             </span>
           </label>
         </div>
-        <div className="flex flex-col gap-2">
-          <p className="text-gray-500">Shipping address</p>
-          <div className="flex items-center border border-gray-300 rounded-lg p-2 focus-within:outline-none focus-within:ring-2 focus-within:border-blue-500">
-            <input
-              type="text"
-              placeholder="Location"
-              value="P. Sherman 42 Wallaby Way, Sydney"
-              className="flex-grow outline-none px-2"
-            />
-            <MapIcon className="h-5 w-5 text-gray-500" />
-          </div>
-        </div>
+        <InputIcon
+          placeholder="Location"
+          initalValue="P. Sherman 42 Wallaby Way, Sydney"
+          maxLength={250}
+          tittle="Shipping address"
+          handleChange={handleValueChange}
+        >
+          <MapIcon className="h-5 w-5 text-gray-500" />
+        </InputIcon>
+
         <div className="flex flex-col gap-2">
           <p className="text-black font-bold text-[20px]">
             Payment information
@@ -156,58 +124,38 @@ export const CheckoutPage = () => {
             ))}
           </div>
         </div>
-        <div className="flex flex-col gap-2">
-          <p className="text-gray-500">Name on card</p>
-          <div className="flex items-center border border-gray-300 rounded-lg p-2 focus-within:outline-none focus-within:ring-2 focus-within:border-blue-500">
-            <input
-              type="text"
-              placeholder="Bruno Diaz"
-              value="Erick Dejo"
-              className="flex-grow outline-none px-2"
-            />
-            <UserIcon className="h-5 w-5 text-gray-500" />
-          </div>
-        </div>
-        <div className="flex flex-col gap-2">
-          <p className="text-gray-500">Card number</p>
-          <div className="flex items-center border border-gray-300 rounded-lg p-2 focus-within:outline-none focus-within:ring-2 focus-within:border-blue-500">
-            <input
-              type="text"
-              id="cardNumber"
-              value={cardNumber}
-              onChange={handleInputCardChange}
-              placeholder="1234 5678 9012 3456"
-              className="flex-grow outline-none px-2"
-              maxLength={19} // Limitar a 19 caracteres (16 dígitos + 3 espacios)
-            />
-            <CreditCardIcon className="h-5 w-5 text-gray-500" />
-          </div>
-        </div>
+        <InputIcon
+          placeholder="Bruno Diaz"
+          initalValue="Erick Dejo"
+          maxLength={250}
+          tittle="Name on card"
+          handleChange={handleValueChange}
+        >
+          <UserIcon className="h-5 w-5 text-gray-500" />
+        </InputIcon>
+
+        <InputIcon
+          placeholder="1234 5678 9012 3456"
+          maxLength={19}
+          tittle="Card number"
+          handleChange={handleInputCardChange}
+        >
+          <CreditCardIcon className="h-5 w-5 text-gray-500" />
+        </InputIcon>
         <div className="flex flex-row w-full gap-4">
-          <div className="flex flex-col gap-2 w-auto">
-            <p className="text-gray-500">Expiration</p>
-            <input
-              type="text"
-              id="expiry"
-              value={expiryDate}
-              onChange={handleInputDateChange}
-              placeholder="MM/YY"
-              className="border  rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-40"
-              maxLength={5} // Limitar la entrada a 5 caracteres (MM/YY)
-            />
-          </div>
-          <div className="flex flex-col gap-2 w-auto">
-            <p className="text-gray-500">CVV</p>
-            <input
-              type="text"
-              placeholder="CVV"
-              value={cvv}
-              onChange={handleChange}
-              className="border  rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-40"
-              maxLength={4} // Máximo de 4 caracteres
-              inputMode="numeric" // Muestra teclado numérico en móviles
-            />
-          </div>
+          <InputMini
+            placeholder="MM/YY"
+            maxLength={5}
+            tittle="Expiration"
+            handleChange={handleInputDateChange}
+          ></InputMini>
+          <InputMini
+            placeholder="CVV"
+            maxLength={4}
+            tittle="CVV"
+            inputMode="numeric"
+            handleChange={handleCvvChange}
+          ></InputMini>
         </div>
         <div className="flex flex-row w-full gap-4">
           <button
@@ -226,21 +174,30 @@ export const CheckoutPage = () => {
       </div>
       <div className="flex flex-col gap-4 w-[40%] py-4 pr-4 pl-8 border-l  border-gray-200 ">
         <p>Order Summary</p>
-        <div className="flex flex-col ">
-          {shopCardOrder.map((item: shopCardOrderItemProps) => (
-            <div className="flex flex-row gap-4 items-center w-full">
-              <p className="text-gray-500 w-[10%]">x{item.amount}</p>
-              <p className="text-gray-700 w-[50%]">{item.title}</p>
-              <p className="text-gray-700 w-[30%]">{priceFormat(item.price)}</p>
-              <button
-                className="rounded-md bg-white hover:bg-black hover:text-white p-2 transition-all duration-300 "
-                onClick={() => removeItem(item.id)}
-              >
-                <TrashIcon className="h-5  w-5 fill-curren"></TrashIcon>
-              </button>
-            </div>
-          ))}
-        </div>
+        {shopCardOrder.length === 0 ? (
+          <p className="text-center italic font-light my-3">
+            Ups! There are no items to checkout.
+          </p>
+        ) : (
+          <div className="flex flex-col ">
+            {shopCardOrder.map((item: shopCardOrderItemProps) => (
+              <div className="flex flex-row gap-4 items-center w-full">
+                <p className="text-gray-500 w-[10%]">x{item.amount}</p>
+                <p className="text-gray-700 w-[50%]">{item.title}</p>
+                <p className="text-gray-700 w-[30%]">
+                  {priceFormat(item.price)}
+                </p>
+                <button
+                  className="rounded-md bg-white hover:bg-black hover:text-white p-2 transition-all duration-300 "
+                  onClick={() => removeItem(item.id)}
+                >
+                  <TrashIcon className="h-5  w-5 fill-curren"></TrashIcon>
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+
         <div className="flex flex-row justify-end p-0 border-t  border-gray-200  w-full"></div>
         <div className="flex flex-row  items-center w-full justify-between">
           <p className="text-gray-700">Delivery</p>

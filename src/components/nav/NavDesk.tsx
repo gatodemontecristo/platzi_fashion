@@ -8,7 +8,7 @@ import {
 } from '../../stores';
 import { ShopCarOrder } from '../../ecomerce/components';
 import { nanoid } from 'nanoid';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const NavDesk = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -80,7 +80,15 @@ export const NavDesk = () => {
   const { shopCardOrder } = useShopCarStore();
 
   const location = useLocation();
-  console.log('location', location);
+
+  const navigate = useNavigate();
+  const goToShop = () => {
+    navigate('/shop');
+  };
+  const goToCheckout = () => {
+    navigate('/checkout');
+  };
+
   return (
     <div
       id="myMenu"
@@ -127,7 +135,7 @@ export const NavDesk = () => {
       <div className="flex flex-row gap-4 font-light text-sm items-start justify-center">
         <input
           value={inputValue}
-          className="invisible font-thin border-slate-950 border-solid border-2 h-9 w-60 px-4 text-right m-5"
+          className={`${location.pathname === '/checkout' && 'invisible'} font-thin border-slate-950 border-solid border-2 h-9 w-60 px-4 text-right m-5`}
           placeholder="Search a product"
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
@@ -135,7 +143,17 @@ export const NavDesk = () => {
 
         <p>@platzi_fashion</p>
         <p>My Orders</p>
-        <p>My Shop</p>
+        {location.pathname === '/checkout' && (
+          <button className="h-fi" onClick={goToShop}>
+            My Shop
+          </button>
+        )}
+        {location.pathname !== '/checkout' && (
+          <button className="h-fi" onClick={goToCheckout}>
+            Checkout
+          </button>
+        )}
+
         <p>Reset All</p>
 
         <div className="relative">

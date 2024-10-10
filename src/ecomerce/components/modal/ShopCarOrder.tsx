@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { shopCardOrderItemProps, useShopCarStore } from '../../../stores';
 import { ItemShopCar } from '../cards';
 import { nanoid } from 'nanoid';
@@ -24,7 +25,12 @@ export const ShopCarOrder = ({
     removeItem(id);
     notyf.error('The product has been removed from the shopping cart.');
   };
+  const navigate = useNavigate();
 
+  const goToCheckout = () => {
+    toggleModal();
+    navigate('/checkout');
+  };
   return (
     <div>
       <div
@@ -58,7 +64,10 @@ export const ShopCarOrder = ({
           <div className="flex flex-row justify-end p-4 border-t border-gray-200 h-1/4">
             <button
               className="w-2/4 min-w-24 max-w-44 h-11 rounded-full text-white font-bold shadow-lg bg-primary ease-in-out
-    hover:bg-white hover:text-black transform hover:-translate-y-1 hover:scale-110 transition-all duration-300"
+    hover:bg-white hover:text-black transform hover:-translate-y-1 hover:scale-110 transition-all duration-300
+     disabled:bg-gray-400 disabled:text-white  disabled:cursor-not-allowed disabled:transform-none`"
+              disabled={shopCardOrder.length === 0 ? true : false}
+              onClick={goToCheckout}
             >
               Go to checkout
             </button>

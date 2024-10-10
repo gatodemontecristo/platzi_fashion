@@ -1,5 +1,6 @@
 import { CardProps } from '../../types';
 import { BookmarkIcon, PlusIcon } from '@heroicons/react/24/outline';
+import { priceFormat } from '../../utils';
 interface ShopCardProps {
   card: CardProps;
   setCardSelected: (card: CardProps) => void;
@@ -35,7 +36,7 @@ export const ShopCard = ({ card, setCardSelected, addItem }: ShopCardProps) => {
             <BookmarkIcon className="w-4 h-4" />
           </button>
         </div>
-        <p className="font-light text-[11px]">PEN {card.price}</p>
+        <p className="font-light text-[11px]">{priceFormat(card.price)}</p>
       </div>
     </div>
   );

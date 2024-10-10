@@ -8,6 +8,7 @@ import {
 } from '../../stores';
 import { ShopCarOrder } from '../../ecomerce/components';
 import { nanoid } from 'nanoid';
+import { useLocation } from 'react-router-dom';
 
 export const NavDesk = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -78,6 +79,8 @@ export const NavDesk = () => {
 
   const { shopCardOrder } = useShopCarStore();
 
+  const location = useLocation();
+  console.log('location', location);
   return (
     <div
       id="myMenu"
@@ -92,41 +95,48 @@ export const NavDesk = () => {
             src="platzi_logo2.png"
             alt=""
             className={`absolute inset-0 w-full h-full  transition-opacity duration-500 ${
-              isScrolled ? 'opacity-100' : 'opacity-0'
+              isScrolled || location.pathname === '/checkout'
+                ? 'opacity-100'
+                : 'opacity-0'
             }`}
           />
           <img
             src="platzi_logo.png"
             alt=""
             className={`absolute inset-0 w-full h-full  transition-opacity duration-500 ${
-              isScrolled ? 'opacity-0' : 'opacity-100'
+              isScrolled || location.pathname === '/checkout'
+                ? 'opacity-0'
+                : 'opacity-100'
             }`}
           />
         </div>
-        <ul className="list-none flex flex-row gap-6 font-light text-lg		">
-          {menuNavItems.map((item: menuNavItemsProps) => (
-            <button
-              key={nanoid()}
-              className={`h-fi ${categoryValue === item.category && 'font-bold underline underline-offset-4'}`}
-              onClick={() => handleCurrentCategory(item.category)}
-            >
-              {item.tittle}
-            </button>
-          ))}
-        </ul>
+        {location.pathname !== '/checkout' && (
+          <ul className="list-none flex flex-row gap-6 font-light text-lg		">
+            {menuNavItems.map((item: menuNavItemsProps) => (
+              <button
+                key={nanoid()}
+                className={`h-fi ${categoryValue === item.category && 'font-bold underline underline-offset-4'}`}
+                onClick={() => handleCurrentCategory(item.category)}
+              >
+                {item.tittle}
+              </button>
+            ))}
+          </ul>
+        )}
       </div>
       <div className="flex flex-row gap-4 font-light text-sm items-start justify-center">
         <input
           value={inputValue}
-          className="font-thin border-slate-950 border-solid border-2 h-9 w-60 px-4 text-right m-5"
+          className="invisible font-thin border-slate-950 border-solid border-2 h-9 w-60 px-4 text-right m-5"
           placeholder="Search a product"
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
         ></input>
+
         <p>@platzi_fashion</p>
         <p>My Orders</p>
-        <p>My Account</p>
-        <button className="h-fit">Sign In</button>
+        <p>My Shop</p>
+        <p>Reset All</p>
 
         <div className="relative">
           <button className="h-fi" onClick={toggleModal}>

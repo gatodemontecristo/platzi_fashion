@@ -1,4 +1,5 @@
 import { shopCardOrderItemProps } from '../../../stores';
+import { priceFormat } from '../../utils';
 
 interface ItemShopCarProps {
   item: shopCardOrderItemProps;
@@ -21,9 +22,11 @@ export const ItemShopCar = ({
       ></img>
       <div className="flex flex-col w-2/5 justify-between p-2">
         <p className="font-light text-[11px] uppercase">{item.title}</p>
-        <span className="w-auto self-start bg-gray-400 text-white text-[11px] font-light px-3 py-1 rounded-full">
-          {item.category || ''}
-        </span>
+        <p className="font-light text-[13px] italic">
+          {' '}
+          {item.category || ''}, {priceFormat(item.price)}
+        </p>
+
         <div className="flex flex-row items-center gap-2">
           <button
             onClick={() => onUpdateAmount(item, '+')}

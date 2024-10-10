@@ -1,17 +1,33 @@
 import { useState } from 'react';
-import { useNavBarStore } from '../../../stores';
+import {
+  shopCardOrderItemProps,
+  useNavBarStore,
+  useShopCarStore,
+} from '../../../stores';
 import {
   BanknotesIcon,
   CreditCardIcon,
   CurrencyYenIcon,
   MapIcon,
+  TicketIcon,
+  TrashIcon,
   TruckIcon,
+  UserIcon,
 } from '@heroicons/react/24/solid';
 import { ShoppingBagIcon } from '@heroicons/react/24/solid';
 import { nanoid } from 'nanoid';
+import {
+  handleCvvChange,
+  handleInputCardChange,
+  handleInputDateChange,
+  handleValueChange,
+  priceFormat,
+} from '../../utils';
+import { InputIcon, InputMini } from '../../components';
 
 export const CheckoutPage = () => {
   const [selectedOption, setSelectedOption] = useState<string>('option1');
+  const { shopCardOrder, removeItem } = useShopCarStore();
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(event.target.value);
@@ -24,9 +40,13 @@ export const CheckoutPage = () => {
   };
 
   const { menuHeight } = useNavBarStore();
+
   return (
-    <div className="flex flex-row " style={{ paddingTop: `${menuHeight}px` }}>
-      <div className="flex flex-col gap-8 mx-[10%]">
+    <div
+      className="flex flex-row mx-[10%]  gap-8 mb-20 mt-10"
+      style={{ paddingTop: `${menuHeight}px` }}
+    >
+      <div className="flex flex-col gap-8 w-[60%] p-4">
         <div className="flex flex-col items-start gap-2">
           <label
             className={`flex items-center p-4 w-full cursor-pointer rounded-lg ${
@@ -68,18 +88,16 @@ export const CheckoutPage = () => {
             </span>
           </label>
         </div>
-        <div className="flex flex-col gap-2">
-          <p className="text-gray-500">Shipping address</p>
-          <div className="flex items-center border border-gray-300 rounded-lg p-2">
-            <input
-              type="text"
-              placeholder="Location"
-              value="P. Sherman 42 Wallaby Way, Sydney"
-              className="flex-grow outline-none px-2"
-            />
-            <MapIcon className="h-5 w-5 text-gray-500" />
-          </div>
-        </div>
+        <InputIcon
+          placeholder="Location"
+          initalValue="P. Sherman 42 Wallaby Way, Sydney"
+          maxLength={250}
+          tittle="Shipping address"
+          handleChange={handleValueChange}
+        >
+          <MapIcon className="h-5 w-5 text-gray-500" />
+        </InputIcon>
+
         <div className="flex flex-col gap-2">
           <p className="text-black font-bold text-[20px]">
             Payment information
@@ -106,17 +124,126 @@ export const CheckoutPage = () => {
             ))}
           </div>
         </div>
-        <div className="flex flex-col gap-2">
-          <p className="text-gray-500">Name on card</p>
-          <div className="flex items-center border border-gray-300 rounded-lg p-2">
+        <InputIcon
+          placeholder="Bruno Diaz"
+          initalValue="Erick Dejo"
+          maxLength={250}
+          tittle="Name on card"
+          handleChange={handleValueChange}
+        >
+          <UserIcon className="h-5 w-5 text-gray-500" />
+        </InputIcon>
+
+        <InputIcon
+          placeholder="1234 5678 9012 3456"
+          maxLength={19}
+          tittle="Card number"
+          handleChange={handleInputCardChange}
+        >
+          <CreditCardIcon className="h-5 w-5 text-gray-500" />
+        </InputIcon>
+        <div className="flex flex-row w-full gap-4">
+          <InputMini
+            placeholder="MM/YY"
+            maxLength={5}
+            tittle="Expiration"
+            handleChange={handleInputDateChange}
+          ></InputMini>
+          <InputMini
+            placeholder="CVV"
+            maxLength={4}
+            tittle="CVV"
+            inputMode="numeric"
+            handleChange={handleCvvChange}
+          ></InputMini>
+        </div>
+        <div className="flex flex-row w-full gap-4">
+          <button
+            className="w-auto h-11 px-5 rounded-full text-black font-bold shadow-lg bg-white ease-in-out
+    hover:bg-black hover:text-white transform hover:-translate-y-1 hover:scale-110 transition-all duration-300"
+          >
+            Back
+          </button>
+          <button
+            className="w-auto h-11 px-5 rounded-full text-white font-bold shadow-lg bg-blue-600 ease-in-out
+    hover:bg-white hover:text-black transform hover:-translate-y-1 hover:scale-110 transition-all duration-300"
+          >
+            Comfirm Payment $570.98
+          </button>
+        </div>
+      </div>
+      <div className="flex flex-col gap-4 w-[40%] py-4 pr-4 pl-8 border-l  border-gray-200 ">
+        <p>Order Summary</p>
+        {shopCardOrder.length === 0 ? (
+          <p className="text-center italic font-light my-3">
+            Ups! There are no items to checkout.
+          </p>
+        ) : (
+          <div className="flex flex-col ">
+            {shopCardOrder.map((item: shopCardOrderItemProps) => (
+              <div className="flex flex-row gap-4 items-center w-full">
+                <p className="text-gray-500 w-[10%]">x{item.amount}</p>
+                <p className="text-gray-700 w-[50%]">{item.title}</p>
+                <p className="text-gray-700 w-[30%]">
+                  {priceFormat(item.price)}
+                </p>
+                <button
+                  className="rounded-md bg-white hover:bg-black hover:text-white p-2 transition-all duration-300 "
+                  onClick={() => removeItem(item.id)}
+                >
+                  <TrashIcon className="h-5  w-5 fill-curren"></TrashIcon>
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className="flex flex-row justify-end p-0 border-t  border-gray-200  w-full"></div>
+        <div className="flex flex-row  items-center w-full justify-between">
+          <p className="text-gray-700">Delivery</p>
+          <p className="text-gray-700">{priceFormat(450)}</p>
+        </div>
+        <div className="flex flex-row  items-center w-full justify-between">
+          <p className="text-gray-700">Discount</p>
+          <p className="text-gray-700">{priceFormat(450)}</p>
+        </div>
+        <div className="flex flex-row justify-end p-0 border-t  border-gray-200  w-full"></div>
+        <div className="flex flex-row  items-center w-full justify-between">
+          <p className="text-gray-700">Total (exc tax)</p>
+          <p className="text-gray-700">{priceFormat(450)}</p>
+        </div>
+        <div className="flex flex-row  items-center w-full justify-between">
+          <p className="text-gray-700">Tax</p>
+          <p className="text-gray-700">{priceFormat(450)}</p>
+        </div>
+        <div className="flex flex-row justify-end p-0 border-t  border-gray-200  w-full"></div>
+        <div className="flex flex-row  items-center w-full justify-between">
+          <p className="text-gray-700 font-bold">Order Total</p>
+          <p className="text-gray-700 font-bold">{priceFormat(450)}</p>
+        </div>
+        <div className="flex flex-row justify-end p-0 border-t  border-gray-200  w-full"></div>
+        <div
+          className="flex flex-row w-full justify-between bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg"
+          role="alert"
+        >
+          <p>Your total saving on this order</p>
+          <p>{priceFormat(450)}</p>
+        </div>
+        <div className="flex flex-row  items-center w-full justify-between gap-4">
+          <div className="flex items-center w-[60%] border border-gray-300 rounded-lg p-2 focus-within:outline-none focus-within:ring-2 focus-within:border-blue-500">
             <input
               type="text"
-              placeholder="Bruno Diaz"
-              value="Erick Dejo"
+              placeholder="Coupon code"
               className="flex-grow outline-none px-2"
             />
-            <CreditCardIcon className="h-5 w-5 text-gray-500" />
+            <TicketIcon className="h-5 w-5 text-gray-500" />
           </div>
+          <button
+            className=" w-[40%] h-10 px-5 rounded-full text-black font-bold shadow-lg bg-white ease-in-out
+    hover:bg-black hover:text-white transform hover:-translate-y-1 hover:scale-110 transition-all duration-300"
+          >
+            Apply
+          </button>
         </div>
       </div>
     </div>

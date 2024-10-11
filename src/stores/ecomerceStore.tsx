@@ -179,3 +179,56 @@ export const useNavBarStore = create<NavBarStoreProps>((set) => ({
   menuHeight: 0,
   setMenuHeight: (height) => set({ menuHeight: height }),
 }));
+
+interface NumericObject {
+  [key: string]: number;
+}
+export interface EcomerceStoreProps {
+  totalResult: NumericObject;
+  setTotalResult: (
+    shopCardOrder: shopCardOrderItemProps[],
+    option: string,
+    payment: number,
+  ) => void;
+}
+export const useEcomerceStore = create<EcomerceStoreProps>((set) => ({
+  totalResult: {
+    delivery: 0,
+    discount: 0,
+    totalexc: 0,
+    tax: 0,
+    order: 0,
+    saving: 0,
+  },
+  setTotalResult: (shopCardOrder, option, payment) => {
+    const totalexc = shopCardOrder.reduce(
+      (sum, item) => sum + item.price * item.amount,
+      0,
+    );
+    const delivery = option === 'option1' ? 11.2 : 0;
+    let discount: number;
+    switch (payment) {
+      case 0:
+        discount = 5.9;
+        break;
+      case 1:
+        discount = 8.7;
+        break;
+      default:
+        discount = 7.2;
+    }
+    const tax = totalexc * 0.18;
+    const order = totalexc + delivery + discount + tax;
+    const saving = order * 0.2;
+    set({
+      totalResult: {
+        delivery,
+        discount,
+        totalexc,
+        tax,
+        order,
+        saving,
+      },
+    });
+  },
+}));

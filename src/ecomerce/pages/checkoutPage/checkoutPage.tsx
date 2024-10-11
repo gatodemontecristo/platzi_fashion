@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   shopCardOrderItemProps,
+  useEcomerceStore,
   useNavBarStore,
   useShopCarStore,
 } from '../../../stores';
@@ -24,26 +25,35 @@ import {
   priceFormat,
 } from '../../utils';
 import { InputIcon, InputMini } from '../../components';
+import { Notyf } from 'notyf';
 
 export const CheckoutPage = () => {
   const [selectedOption, setSelectedOption] = useState<string>('option1');
   const { shopCardOrder, removeItem } = useShopCarStore();
+  const { totalResult, setTotalResult } = useEcomerceStore();
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(event.target.value);
   };
 
-  const [selectedButton, setSelectedButton] = useState<number | null>(null);
+  const [selectedButton, setSelectedButton] = useState<number>(0);
 
   const handleButtonClick = (index: number) => {
     setSelectedButton(index);
   };
 
   const { menuHeight } = useNavBarStore();
-
+  useEffect(() => {
+    setTotalResult(shopCardOrder, selectedOption, selectedButton);
+  }, [shopCardOrder, selectedOption, selectedButton]);
+  const notyf = new Notyf();
+  const onRemoveFunction = (id: number) => {
+    removeItem(id);
+    notyf.error('The product has been removed from the shopping cart.');
+  };
   return (
     <div
-      className="flex flex-row mx-[10%]  gap-8 mb-20 mt-10"
+      className="flex flex-row mx-[10%]  gap-8 mb-20 "
       style={{ paddingTop: `${menuHeight}px` }}
     >
       <div className="flex flex-col gap-8 w-[60%] p-4">
@@ -189,7 +199,7 @@ export const CheckoutPage = () => {
                 </p>
                 <button
                   className="rounded-md bg-white hover:bg-black hover:text-white p-2 transition-all duration-300 "
-                  onClick={() => removeItem(item.id)}
+                  onClick={() => onRemoveFunction(item.id)}
                 >
                   <TrashIcon className="h-5  w-5 fill-curren"></TrashIcon>
                 </button>
@@ -201,25 +211,27 @@ export const CheckoutPage = () => {
         <div className="flex flex-row justify-end p-0 border-t  border-gray-200  w-full"></div>
         <div className="flex flex-row  items-center w-full justify-between">
           <p className="text-gray-700">Delivery</p>
-          <p className="text-gray-700">{priceFormat(450)}</p>
+          <p className="text-gray-700">{priceFormat(totalResult.delivery)}</p>
         </div>
         <div className="flex flex-row  items-center w-full justify-between">
           <p className="text-gray-700">Discount</p>
-          <p className="text-gray-700">{priceFormat(450)}</p>
+          <p className="text-gray-700">{priceFormat(totalResult.discount)}</p>
         </div>
         <div className="flex flex-row justify-end p-0 border-t  border-gray-200  w-full"></div>
         <div className="flex flex-row  items-center w-full justify-between">
           <p className="text-gray-700">Total (exc tax)</p>
-          <p className="text-gray-700">{priceFormat(450)}</p>
+          <p className="text-gray-700">{priceFormat(totalResult.totalexc)}</p>
         </div>
         <div className="flex flex-row  items-center w-full justify-between">
           <p className="text-gray-700">Tax</p>
-          <p className="text-gray-700">{priceFormat(450)}</p>
+          <p className="text-gray-700">{priceFormat(totalResult.tax)}</p>
         </div>
         <div className="flex flex-row justify-end p-0 border-t  border-gray-200  w-full"></div>
         <div className="flex flex-row  items-center w-full justify-between">
           <p className="text-gray-700 font-bold">Order Total</p>
-          <p className="text-gray-700 font-bold">{priceFormat(450)}</p>
+          <p className="text-gray-700 font-bold">
+            {priceFormat(totalResult.order)}
+          </p>
         </div>
         <div className="flex flex-row justify-end p-0 border-t  border-gray-200  w-full"></div>
         <div
@@ -227,7 +239,7 @@ export const CheckoutPage = () => {
           role="alert"
         >
           <p>Your total saving on this order</p>
-          <p>{priceFormat(450)}</p>
+          <p>{priceFormat(totalResult.saving)}</p>
         </div>
         <div className="flex flex-row  items-center w-full justify-between gap-4">
           <div className="flex items-center w-[60%] border border-gray-300 rounded-lg p-2 focus-within:outline-none focus-within:ring-2 focus-within:border-blue-500">

@@ -49,7 +49,7 @@ export const ShopCarOrder = ({
                 </p>
               </div>
             ) : (
-              <div className="flex flex-col gap-3 overflow-y-scroll">
+              <div className="flex flex-col gap-3 overflow-y-scroll overflow-x-hidden">
                 {shopCardOrder.map((item: shopCardOrderItemProps) => (
                   <ItemShopCar
                     key={nanoid()}

@@ -12,7 +12,7 @@ export const ItemShopCar = ({
   onRemoveFunction,
 }: ItemShopCarProps) => {
   return (
-    <div className="flex flex-row  divide-x divide-gray-500 border border-gray-500">
+    <div className="flex flex-row  divide-x divide-gray-500 border border-gray-500 animate__animated animate__fadeInRight">
       <img
         className="w-2/5"
         src={item.image}

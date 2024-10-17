@@ -78,7 +78,7 @@ export const PromoPage = () => {
     <>
       <VideoBackground {...{ onScrollToItems }}></VideoBackground>
 
-      <div className="relative mt-[110vh] flex items-center justify-center flex-col box-border">
+      <div className="relative mt-[110vh] flex items-center justify-center flex-col box-border overflow-x-hidden">
         <InfoSection01></InfoSection01>
         <InfoSection02></InfoSection02>
         <InfoSection03></InfoSection03>

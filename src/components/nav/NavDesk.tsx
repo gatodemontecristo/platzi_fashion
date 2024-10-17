@@ -2,6 +2,8 @@ import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 import { menuNavItems, menuNavItemsProps } from '../../ecomerce/utils';
 import {
+  clearStore,
+  useMyOrders,
   useNavBarStore,
   useShopCarStore,
   useShopFilterStore,
@@ -9,7 +11,7 @@ import {
 import { ShopCarOrder } from '../../ecomerce/components';
 import { nanoid } from 'nanoid';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import { Notyf } from 'notyf';
 export const NavDesk = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const { setMenuHeight } = useNavBarStore();
@@ -91,6 +93,16 @@ export const NavDesk = () => {
   const goToMyOrders = () => {
     navigate('/orders');
   };
+  const notyf = new Notyf();
+  const cleanStoreage = () => {
+    notyf.success('All data has been deleted.');
+    clearStore();
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+  };
+
+  const { orderList } = useMyOrders();
 
   return (
     <div
@@ -155,16 +167,25 @@ export const NavDesk = () => {
           </button>
         )}
         {location.pathname !== '/checkout' && (
-          <button className="h-fi" onClick={goToCheckout}>
-            Checkout
-          </button>
+          <div className="relative">
+            <button className="h-fi" onClick={goToCheckout}>
+              Checkout
+            </button>
+            {orderList.length > 0 && (
+              <span className="absolute top-[-15px] right-[-15px] inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-gray-600 rounded-full">
+                {orderList.length}
+              </span>
+            )}
+          </div>
         )}
-        <p>Reset All</p>
+
+        <button className="h-fi" onClick={cleanStoreage}>
+          Reset All
+        </button>
         <div className="relative">
           <button className="h-fi" onClick={toggleModal}>
             <ShoppingCartIcon className="h-6 w-6 fill-curren" />
           </button>
-          {/* Contador de notificaciones */}
           {shopCardOrder.length > 0 && (
             <span className="absolute top-[-15px] right-[-15px] inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-500 rounded-full">
               {shopCardOrder.length}

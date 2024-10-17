@@ -114,6 +114,7 @@ export interface useShopCarStoreProps {
   addItem: (product: CardProps) => void;
   removeItem: (id: number) => void;
   updateItem: (amount: number, id: number) => void;
+  cleanItems: () => void;
 }
 export const useShopCarStore = create(
   persist<useShopCarStoreProps>(
@@ -154,17 +155,7 @@ export const useShopCarStore = create(
           };
         });
       },
-
-      /*  const existingProductIndex = get().shopCardOrder.findIndex(
-          (item) => item.id === product.id,
-        );
-        if (existingProductIndex !== -1) {
-          get().shopCardOrder[existingProductIndex].amount += 1;
-          return;
-        }
-        [...get().shopCardOrder, { ...product, quantity: 1 }];
-        return;
-      },*/
+      cleanItems: () => set({ shopCardOrder: [] }),
     }),
     {
       name: 'shopcar-store',
@@ -232,3 +223,30 @@ export const useEcomerceStore = create<EcomerceStoreProps>((set) => ({
     });
   },
 }));
+
+export interface myOrdersProps {
+  id: string;
+  date: string;
+  articles: number;
+  total: number;
+  shopOrderCollection: shopCardOrderItemProps[];
+}
+export interface useMyOrdersProps {
+  orderList: myOrdersProps[];
+  addOrderList: (order: myOrdersProps) => void;
+}
+export const useMyOrders = create(
+  persist<useMyOrdersProps>(
+    (set) => ({
+      orderList: [],
+      addOrderList: (order) => {
+        set((state) => {
+          return { orderList: [...state.orderList, order] };
+        });
+      },
+    }),
+    {
+      name: 'order-store',
+    },
+  ),
+);

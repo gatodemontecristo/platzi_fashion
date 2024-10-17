@@ -17,7 +17,7 @@ export const Pagination = ({
   return (
     <div className="flex flex-row pagination mt-14">
       <button onClick={handlePrevPage} disabled={currentPage === 1}>
-        <ChevronLeftIcon className="h-6 w-6 fill-curren" />
+        <ChevronLeftIcon className="h-6 w-6 fill-current" />
       </button>
       {/*     <span>
         Page {currentPage} of {totalPages}
@@ -38,7 +38,7 @@ export const Pagination = ({
       ))}
 
       <button onClick={handleNextPage} disabled={currentPage === totalPages}>
-        <ChevronRightIcon className="h-6 w-6 fill-curren" />
+        <ChevronRightIcon className="h-6 w-6 fill-current" />
       </button>
     </div>
   );

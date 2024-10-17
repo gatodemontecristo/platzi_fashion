@@ -88,6 +88,9 @@ export const NavDesk = () => {
   const goToCheckout = () => {
     navigate('/checkout');
   };
+  const goToMyOrders = () => {
+    navigate('/orders');
+  };
 
   return (
     <div
@@ -103,7 +106,7 @@ export const NavDesk = () => {
             src="platzi_logo2.png"
             alt=""
             className={`absolute inset-0 w-full h-full  transition-opacity duration-500 ${
-              isScrolled || location.pathname === '/checkout'
+              isScrolled || location.pathname !== '/shop'
                 ? 'opacity-100'
                 : 'opacity-0'
             }`}
@@ -112,13 +115,13 @@ export const NavDesk = () => {
             src="platzi_logo.png"
             alt=""
             className={`absolute inset-0 w-full h-full  transition-opacity duration-500 ${
-              isScrolled || location.pathname === '/checkout'
+              isScrolled || location.pathname !== '/shop'
                 ? 'opacity-0'
                 : 'opacity-100'
             }`}
           />
         </div>
-        {location.pathname !== '/checkout' && (
+        {location.pathname === '/shop' && (
           <ul className="list-none flex flex-row gap-6 font-light text-lg		">
             {menuNavItems.map((item: menuNavItemsProps) => (
               <button
@@ -135,15 +138,18 @@ export const NavDesk = () => {
       <div className="flex flex-row gap-4 font-light text-sm items-start justify-center">
         <input
           value={inputValue}
-          className={`${location.pathname === '/checkout' && 'invisible'} font-thin border-slate-950 border-solid border-2 h-9 w-60 px-4 text-right m-5`}
+          className={`${location.pathname !== '/shop' && 'invisible'} font-thin border-slate-950 border-solid border-2 h-9 w-60 px-4 text-right m-5`}
           placeholder="Search a product"
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
         ></input>
-
         <p>@platzi_fashion</p>
-        <p>My Orders</p>
-        {location.pathname === '/checkout' && (
+        {location.pathname !== '/orders' && (
+          <button className="h-fi" onClick={goToMyOrders}>
+            My Orders
+          </button>
+        )}
+        {location.pathname !== '/shop' && (
           <button className="h-fi" onClick={goToShop}>
             My Shop
           </button>
@@ -153,9 +159,7 @@ export const NavDesk = () => {
             Checkout
           </button>
         )}
-
         <p>Reset All</p>
-
         <div className="relative">
           <button className="h-fi" onClick={toggleModal}>
             <ShoppingCartIcon className="h-6 w-6 fill-curren" />

@@ -65,7 +65,7 @@ export const ShopCarOrder = ({
             <button
               className="w-2/4 min-w-24 max-w-44 h-11 rounded-full text-white font-bold shadow-lg bg-primary ease-in-out
     hover:bg-white hover:text-black transform hover:-translate-y-1 hover:scale-110 transition-all duration-300
-     disabled:bg-gray-400 disabled:text-white  disabled:cursor-not-allowed disabled:transform-none`"
+     disabled:bg-gray-400 disabled:text-white  disabled:cursor-not-allowed disabled:transform-none"
               disabled={shopCardOrder.length === 0 ? true : false}
               onClick={goToCheckout}
             >

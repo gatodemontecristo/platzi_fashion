@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import {
   shopCardOrderItemProps,
   useEcomerceStore,
+  useMyOrders,
   useNavBarStore,
   useShopCarStore,
 } from '../../../stores';
@@ -18,6 +19,7 @@ import {
 import { ShoppingBagIcon } from '@heroicons/react/24/solid';
 import { nanoid } from 'nanoid';
 import {
+  getFormattedDate,
   handleCvvChange,
   handleInputCardChange,
   handleInputDateChange,
@@ -26,11 +28,13 @@ import {
 } from '../../utils';
 import { InputIcon, InputMini } from '../../components';
 import { Notyf } from 'notyf';
+import { useNavigate } from 'react-router-dom';
 
 export const CheckoutPage = () => {
   const [selectedOption, setSelectedOption] = useState<string>('option1');
-  const { shopCardOrder, removeItem } = useShopCarStore();
+  const { shopCardOrder, removeItem, cleanItems } = useShopCarStore();
   const { totalResult, setTotalResult } = useEcomerceStore();
+  const navigate = useNavigate();
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(event.target.value);
@@ -51,6 +55,21 @@ export const CheckoutPage = () => {
     removeItem(id);
     notyf.error('The product has been removed from the shopping cart.');
   };
+  const { addOrderList } = useMyOrders();
+
+  const createOrderFn = () => {
+    addOrderList({
+      id: nanoid(),
+      date: getFormattedDate(),
+      articles: shopCardOrder.length,
+      total: totalResult.order,
+      shopOrderCollection: shopCardOrder,
+    });
+    cleanItems();
+    navigate('/orders');
+    notyf.success('Purchase order has been generated.');
+  };
+
   return (
     <div
       className="flex flex-row mx-[10%]  gap-8 mb-20 "
@@ -169,16 +188,20 @@ export const CheckoutPage = () => {
         </div>
         <div className="flex flex-row w-full gap-4">
           <button
+            onClick={() => navigate(-1)}
             className="w-auto h-11 px-5 rounded-full text-black font-bold shadow-lg bg-white ease-in-out
     hover:bg-black hover:text-white transform hover:-translate-y-1 hover:scale-110 transition-all duration-300"
           >
             Back
           </button>
           <button
+            onClick={createOrderFn}
+            disabled={shopCardOrder.length === 0 ? true : false}
             className="w-auto h-11 px-5 rounded-full text-white font-bold shadow-lg bg-blue-600 ease-in-out
-    hover:bg-white hover:text-black transform hover:-translate-y-1 hover:scale-110 transition-all duration-300"
+    hover:bg-white hover:text-black transform hover:-translate-y-1 hover:scale-110 transition-all duration-300
+    disabled:bg-gray-400 disabled:text-white  disabled:cursor-not-allowed disabled:transform-none"
           >
-            Comfirm Payment $570.98
+            {`Comfirm Payment ${priceFormat(totalResult.order)}`}
           </button>
         </div>
       </div>

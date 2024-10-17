@@ -114,6 +114,7 @@ export interface useShopCarStoreProps {
   addItem: (product: CardProps) => void;
   removeItem: (id: number) => void;
   updateItem: (amount: number, id: number) => void;
+  cleanItems: () => void;
 }
 export const useShopCarStore = create(
   persist<useShopCarStoreProps>(
@@ -154,17 +155,7 @@ export const useShopCarStore = create(
           };
         });
       },
-
-      /*  const existingProductIndex = get().shopCardOrder.findIndex(
-          (item) => item.id === product.id,
-        );
-        if (existingProductIndex !== -1) {
-          get().shopCardOrder[existingProductIndex].amount += 1;
-          return;
-        }
-        [...get().shopCardOrder, { ...product, quantity: 1 }];
-        return;
-      },*/
+      cleanItems: () => set({ shopCardOrder: [] }),
     }),
     {
       name: 'shopcar-store',
@@ -179,3 +170,99 @@ export const useNavBarStore = create<NavBarStoreProps>((set) => ({
   menuHeight: 0,
   setMenuHeight: (height) => set({ menuHeight: height }),
 }));
+
+interface NumericObject {
+  [key: string]: number;
+}
+export interface EcomerceStoreProps {
+  totalResult: NumericObject;
+  setTotalResult: (
+    shopCardOrder: shopCardOrderItemProps[],
+    option: string,
+    payment: number,
+  ) => void;
+}
+export const useEcomerceStore = create<EcomerceStoreProps>((set) => ({
+  totalResult: {
+    delivery: 0,
+    discount: 0,
+    totalexc: 0,
+    tax: 0,
+    order: 0,
+    saving: 0,
+  },
+  setTotalResult: (shopCardOrder, option, payment) => {
+    const totalexc = shopCardOrder.reduce(
+      (sum, item) => sum + item.price * item.amount,
+      0,
+    );
+    const delivery = option === 'option1' ? 11.2 : 0;
+    let discount: number;
+    switch (payment) {
+      case 0:
+        discount = 5.9;
+        break;
+      case 1:
+        discount = 8.7;
+        break;
+      default:
+        discount = 7.2;
+    }
+    const tax = totalexc * 0.18;
+    const order = totalexc + delivery + discount + tax;
+    const saving = order * 0.2;
+    set({
+      totalResult: {
+        delivery,
+        discount,
+        totalexc,
+        tax,
+        order,
+        saving,
+      },
+    });
+  },
+}));
+
+export interface myOrdersProps {
+  id: string;
+  date: string;
+  articles: number;
+  total: number;
+  shopOrderCollection: shopCardOrderItemProps[];
+}
+export interface useMyOrdersProps {
+  orderList: myOrdersProps[];
+  addOrderList: (order: myOrdersProps) => void;
+  getOrderCollection: (id: string) => myOrdersProps | null;
+}
+export const useMyOrders = create(
+  persist<useMyOrdersProps>(
+    (set, get) => ({
+      orderList: [],
+      addOrderList: (order) => {
+        set((state) => {
+          return { orderList: [...state.orderList, order] };
+        });
+      },
+      getOrderCollection: (id) => {
+        return get().orderList.filter((order) => order.id === id)[0] || null;
+      },
+    }),
+    {
+      name: 'order-store',
+    },
+  ),
+);
+
+// Función para limpiar el almacenamiento
+export const clearStore = () => {
+  localStorage.removeItem('order-store'); // Elimina el key almacenado
+  localStorage.removeItem('shopcar-store');
+  localStorage.removeItem('filter-gallery');
+
+  // También puedes hacer que Zustand reinicie el estado
+  useMyOrders.persist.clearStorage();
+  useShopCarStore.persist.clearStorage();
+  useShopFilterStore.persist.clearStorage();
+};

@@ -49,3 +49,12 @@ export const handleValueChange = (
 ) => {
   setValue(e.target.value);
 };
+
+export const getFormattedDate = (): string => {
+  const today = new Date();
+  const day = String(today.getDate()).padStart(2, '0');
+  const month = String(today.getMonth() + 1).padStart(2, '0'); // Los meses empiezan en 0
+  const year = today.getFullYear();
+
+  return `${day}/${month}/${year}`;
+};

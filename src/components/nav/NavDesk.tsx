@@ -2,6 +2,8 @@ import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 import { menuNavItems, menuNavItemsProps } from '../../ecomerce/utils';
 import {
+  clearStore,
+  useMyOrders,
   useNavBarStore,
   useShopCarStore,
   useShopFilterStore,
@@ -9,7 +11,7 @@ import {
 import { ShopCarOrder } from '../../ecomerce/components';
 import { nanoid } from 'nanoid';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import { Notyf } from 'notyf';
 export const NavDesk = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const { setMenuHeight } = useNavBarStore();
@@ -88,6 +90,19 @@ export const NavDesk = () => {
   const goToCheckout = () => {
     navigate('/checkout');
   };
+  const goToMyOrders = () => {
+    navigate('/orders');
+  };
+  const notyf = new Notyf();
+  const cleanStoreage = () => {
+    notyf.success('All data has been deleted.');
+    clearStore();
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+  };
+
+  const { orderList } = useMyOrders();
 
   return (
     <div
@@ -103,7 +118,7 @@ export const NavDesk = () => {
             src="platzi_logo2.png"
             alt=""
             className={`absolute inset-0 w-full h-full  transition-opacity duration-500 ${
-              isScrolled || location.pathname === '/checkout'
+              isScrolled || location.pathname !== '/shop'
                 ? 'opacity-100'
                 : 'opacity-0'
             }`}
@@ -112,13 +127,13 @@ export const NavDesk = () => {
             src="platzi_logo.png"
             alt=""
             className={`absolute inset-0 w-full h-full  transition-opacity duration-500 ${
-              isScrolled || location.pathname === '/checkout'
+              isScrolled || location.pathname !== '/shop'
                 ? 'opacity-0'
                 : 'opacity-100'
             }`}
           />
         </div>
-        {location.pathname !== '/checkout' && (
+        {location.pathname === '/shop' && (
           <ul className="list-none flex flex-row gap-6 font-light text-lg		">
             {menuNavItems.map((item: menuNavItemsProps) => (
               <button
@@ -135,32 +150,42 @@ export const NavDesk = () => {
       <div className="flex flex-row gap-4 font-light text-sm items-start justify-center">
         <input
           value={inputValue}
-          className={`${location.pathname === '/checkout' && 'invisible'} font-thin border-slate-950 border-solid border-2 h-9 w-60 px-4 text-right m-5`}
+          className={`${location.pathname !== '/shop' && 'invisible'} font-thin border-slate-950 border-solid border-2 h-9 w-60 px-4 text-right m-5`}
           placeholder="Search a product"
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
         ></input>
-
         <p>@platzi_fashion</p>
-        <p>My Orders</p>
-        {location.pathname === '/checkout' && (
+        {location.pathname !== '/orders' && (
+          <button className="h-fi" onClick={goToMyOrders}>
+            My Orders
+          </button>
+        )}
+        {location.pathname !== '/shop' && (
           <button className="h-fi" onClick={goToShop}>
             My Shop
           </button>
         )}
         {location.pathname !== '/checkout' && (
-          <button className="h-fi" onClick={goToCheckout}>
-            Checkout
-          </button>
+          <div className="relative">
+            <button className="h-fi" onClick={goToCheckout}>
+              Checkout
+            </button>
+            {orderList.length > 0 && (
+              <span className="absolute top-[-15px] right-[-15px] inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-gray-600 rounded-full">
+                {orderList.length}
+              </span>
+            )}
+          </div>
         )}
 
-        <p>Reset All</p>
-
+        <button className="h-fi" onClick={cleanStoreage}>
+          Reset All
+        </button>
         <div className="relative">
           <button className="h-fi" onClick={toggleModal}>
             <ShoppingCartIcon className="h-6 w-6 fill-curren" />
           </button>
-          {/* Contador de notificaciones */}
           {shopCardOrder.length > 0 && (
             <span className="absolute top-[-15px] right-[-15px] inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-500 rounded-full">
               {shopCardOrder.length}

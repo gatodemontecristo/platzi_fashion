@@ -5,12 +5,21 @@ import {
 } from '@heroicons/react/24/solid';
 import { myOrdersProps } from '../../../stores';
 import { priceFormat } from '../../utils';
+import { useNavigate } from 'react-router-dom';
 interface orderCardProps {
   order: myOrdersProps;
 }
 export const OrderCard = ({ order }: orderCardProps) => {
+  const navigate = useNavigate();
+  const onNavigateOrderDetail = () => {
+    navigate(`/orders/${order.id}`);
+  };
+
   return (
-    <div className="group flex flex-row justify-center items-center gap-4 w-1/4 border border-gray-700 rounded-lg p-4">
+    <div
+      className="group flex flex-row justify-center items-center gap-4 w-1/4 border border-gray-700 rounded-lg p-4"
+      onClick={onNavigateOrderDetail}
+    >
       <div className="flex flex-col w-2/5 gap-3">
         <div className="flex flex-row items-center ">
           <CalendarDaysIcon className="h-6 w-6 mr-2"></CalendarDaysIcon>{' '}

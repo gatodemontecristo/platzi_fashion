@@ -234,15 +234,19 @@ export interface myOrdersProps {
 export interface useMyOrdersProps {
   orderList: myOrdersProps[];
   addOrderList: (order: myOrdersProps) => void;
+  getOrderCollection: (id: string) => myOrdersProps | null;
 }
 export const useMyOrders = create(
   persist<useMyOrdersProps>(
-    (set) => ({
+    (set, get) => ({
       orderList: [],
       addOrderList: (order) => {
         set((state) => {
           return { orderList: [...state.orderList, order] };
         });
+      },
+      getOrderCollection: (id) => {
+        return get().orderList.filter((order) => order.id === id)[0] || null;
       },
     }),
     {
@@ -250,3 +254,15 @@ export const useMyOrders = create(
     },
   ),
 );
+
+// Función para limpiar el almacenamiento
+export const clearStore = () => {
+  localStorage.removeItem('order-store'); // Elimina el key almacenado
+  localStorage.removeItem('shopcar-store');
+  localStorage.removeItem('filter-gallery');
+
+  // También puedes hacer que Zustand reinicie el estado
+  useMyOrders.persist.clearStorage();
+  useShopCarStore.persist.clearStorage();
+  useShopFilterStore.persist.clearStorage();
+};

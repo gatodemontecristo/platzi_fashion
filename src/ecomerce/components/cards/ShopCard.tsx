@@ -9,7 +9,7 @@ interface ShopCardProps {
 
 export const ShopCard = ({ card, setCardSelected, addItem }: ShopCardProps) => {
   return (
-    <div className="flex flex-col w-[20%]">
+    <div className="flex flex-col w-[20%] animate__animated animate__fadeInUp">
       <div className="relative">
         <a onClick={() => setCardSelected(card)}>
           <img

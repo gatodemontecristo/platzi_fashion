@@ -3,7 +3,7 @@ interface VideoBackgroundProps {
 }
 export const VideoBackground = ({ onScrollToItems }: VideoBackgroundProps) => {
   return (
-    <div className="absolute left-0 top-0 h-screen w-screen  flex  items-center justify-center z-10">
+    <div className="absolute left-0 top-0 h-screen w-full  flex  items-center justify-center z-10 overflow-x-hidden">
       <video
         className="h-full w-full object-cover"
         autoPlay={true}

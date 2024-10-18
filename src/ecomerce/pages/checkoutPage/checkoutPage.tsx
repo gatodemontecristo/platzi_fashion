@@ -12,7 +12,6 @@ import {
   CurrencyYenIcon,
   MapIcon,
   TicketIcon,
-  TrashIcon,
   TruckIcon,
   UserIcon,
 } from '@heroicons/react/24/solid';
@@ -26,7 +25,7 @@ import {
   handleValueChange,
   priceFormat,
 } from '../../utils';
-import { InputIcon, InputMini } from '../../components';
+import { InputIcon, InputMini, ItemOrderSummary } from '../../components';
 import { Notyf } from 'notyf';
 import { useNavigate } from 'react-router-dom';
 
@@ -51,10 +50,7 @@ export const CheckoutPage = () => {
     setTotalResult(shopCardOrder, selectedOption, selectedButton);
   }, [shopCardOrder, selectedOption, selectedButton]);
   const notyf = new Notyf();
-  const onRemoveFunction = (id: number) => {
-    removeItem(id);
-    notyf.error('The product has been removed from the shopping cart.');
-  };
+
   const { addOrderList } = useMyOrders();
 
   const createOrderFn = () => {
@@ -214,19 +210,9 @@ export const CheckoutPage = () => {
         ) : (
           <div className="flex flex-col ">
             {shopCardOrder.map((item: shopCardOrderItemProps) => (
-              <div className="flex flex-row gap-4 items-center w-full">
-                <p className="text-gray-500 w-[10%]">x{item.amount}</p>
-                <p className="text-gray-700 w-[50%]">{item.title}</p>
-                <p className="text-gray-700 w-[30%]">
-                  {priceFormat(item.price)}
-                </p>
-                <button
-                  className="rounded-md bg-white hover:bg-black hover:text-white p-2 transition-all duration-300 "
-                  onClick={() => onRemoveFunction(item.id)}
-                >
-                  <TrashIcon className="h-5  w-5 fill-curren"></TrashIcon>
-                </button>
-              </div>
+              <ItemOrderSummary
+                {...{ removeItem, item, notyf }}
+              ></ItemOrderSummary>
             ))}
           </div>
         )}

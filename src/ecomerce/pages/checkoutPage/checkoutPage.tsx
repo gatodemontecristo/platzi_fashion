@@ -28,6 +28,7 @@ import {
 import { InputIcon, InputMini, ItemOrderSummary } from '../../components';
 import { Notyf } from 'notyf';
 import { useNavigate } from 'react-router-dom';
+import { ItemForm } from '../../../components';
 
 export const CheckoutPage = () => {
   const [selectedOption, setSelectedOption] = useState<string>('option1');
@@ -217,31 +218,27 @@ export const CheckoutPage = () => {
           </div>
         )}
 
-        <div className="flex flex-row justify-end p-0 border-t  border-gray-200  w-full"></div>
-        <div className="flex flex-row  items-center w-full justify-between">
-          <p className="text-gray-700">Delivery</p>
-          <p className="text-gray-700">{priceFormat(totalResult.delivery)}</p>
-        </div>
-        <div className="flex flex-row  items-center w-full justify-between">
-          <p className="text-gray-700">Discount</p>
-          <p className="text-gray-700">{priceFormat(totalResult.discount)}</p>
-        </div>
-        <div className="flex flex-row justify-end p-0 border-t  border-gray-200  w-full"></div>
-        <div className="flex flex-row  items-center w-full justify-between">
-          <p className="text-gray-700">Total (exc tax)</p>
-          <p className="text-gray-700">{priceFormat(totalResult.totalexc)}</p>
-        </div>
-        <div className="flex flex-row  items-center w-full justify-between">
-          <p className="text-gray-700">Tax</p>
-          <p className="text-gray-700">{priceFormat(totalResult.tax)}</p>
-        </div>
-        <div className="flex flex-row justify-end p-0 border-t  border-gray-200  w-full"></div>
-        <div className="flex flex-row  items-center w-full justify-between">
-          <p className="text-gray-700 font-bold">Order Total</p>
-          <p className="text-gray-700 font-bold">
-            {priceFormat(totalResult.order)}
-          </p>
-        </div>
+        <ItemForm amount={totalResult.delivery} title="Delivery"></ItemForm>
+        <ItemForm
+          amount={totalResult.discount}
+          title="Discount"
+          withLine={false}
+        ></ItemForm>
+        <ItemForm
+          amount={totalResult.totalexc}
+          title="Total (exc tax)"
+        ></ItemForm>
+        <ItemForm
+          amount={totalResult.tax}
+          title="Tax"
+          withLine={false}
+        ></ItemForm>
+        <ItemForm
+          amount={totalResult.order}
+          title="Order Total"
+          withBold={true}
+        ></ItemForm>
+
         <div className="flex flex-row justify-end p-0 border-t  border-gray-200  w-full"></div>
         <div
           className="flex flex-row w-full justify-between bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg"

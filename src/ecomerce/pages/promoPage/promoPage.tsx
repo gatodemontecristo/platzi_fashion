@@ -13,7 +13,6 @@ import {
 import { Spinner } from '../../../components/general';
 import { useEffect, useRef, useState } from 'react';
 import { useShopCarStore, useShopFilterStore } from '../../../stores';
-import { nanoid } from 'nanoid';
 import { Notyf } from 'notyf';
 
 export const PromoPage = () => {
@@ -78,7 +77,7 @@ export const PromoPage = () => {
     <>
       <VideoBackground {...{ onScrollToItems }}></VideoBackground>
 
-      <div className="relative mt-[110vh] flex items-center justify-center flex-col box-border overflow-x-hidden">
+      <div className="relative mt-[110vh] flex items-center justify-center flex-col box-border overflow-x-hidden mb-10">
         <InfoSection01></InfoSection01>
         <InfoSection02></InfoSection02>
         <InfoSection03></InfoSection03>
@@ -97,7 +96,7 @@ export const PromoPage = () => {
           ) : (
             shopCollection.map((card: CardProps) => (
               <ShopCard
-                key={nanoid()}
+                key={card.id}
                 card={card}
                 setCardSelected={onClickCard}
                 addItem={addItemFunction}
@@ -114,10 +113,8 @@ export const PromoPage = () => {
             handleCurrentPage,
           }}
         ></Pagination>
-        <DetailProduct
-          {...{ isOpen, toggleModal, cardSelected }}
-        ></DetailProduct>
       </div>
+      <DetailProduct {...{ isOpen, toggleModal, cardSelected }}></DetailProduct>
     </>
   );
 };

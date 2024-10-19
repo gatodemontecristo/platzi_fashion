@@ -41,7 +41,9 @@ export const useShopFilterStore = create(
       setShopCollection: (value) => set({ shopCollection: value }),
       setTotalSize: (value) => set({ totalSize: value }),
       setTotalPages: (value) => set({ totalPages: value }),
-      setIsLoading: (value) => set({ isLoading: value }),
+      setIsLoading: (value) => {
+        set({ isLoading: value });
+      },
       setInputValue: (value) => set({ inputValue: value }),
       getListItems: async () => {
         get().setIsLoading(true);

@@ -15,7 +15,7 @@ export const DetailProduct = ({
   return (
     <>
       <div
-        className={`fixed top-20 border-gray-950 border-2 right-0 h-full w-1/4 bg-white shadow-lg transform transition-transform duration-500 ease-in-out z-50 ${
+        className={`fixed top-20 border-gray-950 border-2 right-0 h-full lg:w-1/4 w-1/3 bg-white shadow-lg transform transition-transform duration-500 ease-in-out z-50 ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >

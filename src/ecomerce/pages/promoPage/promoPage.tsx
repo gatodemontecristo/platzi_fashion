@@ -85,12 +85,12 @@ export const PromoPage = () => {
 
         <h1
           ref={sectionRef}
-          className="text-3xl font-light   text-black justify-center mb-10 mt-20"
+          className="lg:text-4xl text-3xl font-light   text-black justify-center lg:mb-10 mb-5 lg:mt-20 mt-10"
         >
           Exclusive Products
         </h1>
 
-        <div className="flex flex-row gap-x-4 gap-y-12 flex-wrap px-[10%] justify-center mt-10 z-10">
+        <div className="flex flex-row lg:gap-x-4 gap-x-3 lg:gap-y-12 gap-y-8 flex-wrap lg:px-[10%] px-[5%] justify-center mt-10 z-10">
           {isLoading ? (
             <Spinner></Spinner>
           ) : (

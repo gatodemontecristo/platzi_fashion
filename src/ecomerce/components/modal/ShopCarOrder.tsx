@@ -33,7 +33,7 @@ export const ShopCarOrder = ({
   return (
     <div>
       <div
-        className={`fixed right-0 top-16 w-1/4 h-full p-4 shadow-lg bg-white border-gray-950 border-2   transform transition-transform duration-500 ease-in-out z-50
+        className={`fixed right-0 top-16 lg:w-1/4 w-1/2 h-full p-4 shadow-lg bg-white border-gray-950 border-2   transform transition-transform duration-500 ease-in-out z-50
           ${isModalOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
         <div className="flex flex-col justify-between h-full">

@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { shopCardOrderItemProps, useShopCarStore } from '../../../stores';
 import { ItemShopCar } from '../cards';
-import { nanoid } from 'nanoid';
 import { Notyf } from 'notyf';
 
 interface ShopCarOrderProps {
@@ -50,9 +49,9 @@ export const ShopCarOrder = ({
               </div>
             ) : (
               <div className="flex flex-col gap-3 overflow-y-scroll overflow-x-hidden">
-                {shopCardOrder.map((item: shopCardOrderItemProps) => (
+                {shopCardOrder.map((item: shopCardOrderItemProps, index) => (
                   <ItemShopCar
-                    key={nanoid()}
+                    key={index}
                     onRemoveFunction={onRemoveFunction}
                     {...{ item, onUpdateAmount }}
                   ></ItemShopCar>

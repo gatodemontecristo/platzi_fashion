@@ -210,8 +210,9 @@ export const CheckoutPage = () => {
           </p>
         ) : (
           <div className="flex flex-col ">
-            {shopCardOrder.map((item: shopCardOrderItemProps) => (
+            {shopCardOrder.map((item: shopCardOrderItemProps, index) => (
               <ItemOrderSummary
+                key={index}
                 {...{ removeItem, item, notyf }}
               ></ItemOrderSummary>
             ))}

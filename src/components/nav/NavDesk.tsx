@@ -2,7 +2,6 @@ import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 import { menuNavItems, menuNavItemsProps } from '../../ecomerce/utils';
 import {
-  clearStore,
   useMyOrders,
   useNavBarStore,
   useShopCarStore,
@@ -10,8 +9,9 @@ import {
 } from '../../stores';
 import { ShopCarOrder } from '../../ecomerce/components';
 import { nanoid } from 'nanoid';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Notyf } from 'notyf';
+import { useLocation } from 'react-router-dom';
+import { BurgerButton } from './BurgerButton';
+import { useNavOptions } from '../../hooks';
 export const NavDesk = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const { setMenuHeight } = useNavBarStore();
@@ -80,29 +80,10 @@ export const NavDesk = () => {
   };
 
   const { shopCardOrder } = useShopCarStore();
-
   const location = useLocation();
-
-  const navigate = useNavigate();
-  const goToShop = () => {
-    navigate('/shop');
-  };
-  const goToCheckout = () => {
-    navigate('/checkout');
-  };
-  const goToMyOrders = () => {
-    navigate('/orders');
-  };
-  const notyf = new Notyf();
-  const cleanStoreage = () => {
-    notyf.success('All data has been deleted.');
-    clearStore();
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
-  };
-
   const { orderList } = useMyOrders();
+  const { goToMyOrders, goToShop, goToCheckout, cleanStoreage } =
+    useNavOptions();
 
   return (
     <div
@@ -134,7 +115,7 @@ export const NavDesk = () => {
           />
         </div>
         {location.pathname === '/shop' && (
-          <ul className="list-none flex flex-row gap-6 font-light text-lg		">
+          <ul className="list-none flex flex-row gap-6 font-light text-lg		z-50">
             {menuNavItems.map((item: menuNavItemsProps) => (
               <button
                 key={nanoid()}
@@ -150,41 +131,44 @@ export const NavDesk = () => {
       <div className="flex flex-row gap-4 font-light text-sm items-start justify-center">
         <input
           value={inputValue}
-          className={`${location.pathname !== '/shop' && 'invisible'} font-thin border-slate-950 border-solid border-2 h-9 w-60 px-4 text-right m-5`}
+          className={`${location.pathname !== '/shop' && 'invisible'} font-thin border-slate-950 border-solid border-2 h-9 lg:w-60 w-48 px-4 text-right lg:m-5 m-3`}
           placeholder="Search a product"
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
         ></input>
-        <p>@platzi_fashion</p>
-        {location.pathname !== '/orders' && (
-          <button className="h-fi" onClick={goToMyOrders}>
-            My Orders
-          </button>
-        )}
-        {location.pathname !== '/shop' && (
-          <button className="h-fi" onClick={goToShop}>
-            My Shop
-          </button>
-        )}
-        {location.pathname !== '/checkout' && (
-          <div className="relative">
-            <button className="h-fi" onClick={goToCheckout}>
-              Checkout
-            </button>
-            {orderList.length > 0 && (
-              <span className="absolute top-[-15px] right-[-15px] inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-gray-600 rounded-full">
-                {orderList.length}
-              </span>
-            )}
-          </div>
-        )}
 
-        <button className="h-fi" onClick={cleanStoreage}>
-          Reset All
-        </button>
-        <div className="relative">
+        <div className="lg:flex flex-row gap-4 hidden mt-5">
+          <p>@platzi_fashion</p>
+          {location.pathname !== '/orders' && (
+            <button className="h-fi" onClick={goToMyOrders}>
+              My Orders
+            </button>
+          )}
+          {location.pathname !== '/shop' && (
+            <button className="h-fi" onClick={goToShop}>
+              My Shop
+            </button>
+          )}
+          {location.pathname !== '/checkout' && (
+            <div className="relative ">
+              <button className="h-fi" onClick={goToCheckout}>
+                Checkout
+              </button>
+              {orderList.length > 0 && (
+                <span className="absolute top-[-15px] right-[-15px] inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-gray-600 rounded-full">
+                  {orderList.length}
+                </span>
+              )}
+            </div>
+          )}
+          <button className="h-fi" onClick={cleanStoreage}>
+            Reset All
+          </button>
+        </div>
+        <BurgerButton></BurgerButton>
+        <div className="relative mt-4">
           <button className="h-fi" onClick={toggleModal}>
-            <ShoppingCartIcon className="h-6 w-6 fill-curren" />
+            <ShoppingCartIcon className="h-8 w-8 fill-curren" />
           </button>
           {shopCardOrder.length > 0 && (
             <span className="absolute top-[-15px] right-[-15px] inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-500 rounded-full">

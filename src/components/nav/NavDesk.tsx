@@ -93,8 +93,8 @@ export const NavDesk = () => {
       }`}
     >
       <div></div>
-      <div className="flex flex-col w-1/3">
-        <div className="relative w-full h-28">
+      <div className="flex flex-col lg:w-1/3 w-1/2">
+        <div className="relative w-full lg:h-28 h-20">
           <img
             src="platzi_logo2.png"
             alt=""

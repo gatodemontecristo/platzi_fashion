@@ -1,6 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import { useMyOrders } from '../../stores';
 import { useNavOptions } from '../../hooks';
+import { useEffect } from 'react';
 
 interface OptionsPanelProps {
   isModalOpen: boolean;
@@ -14,6 +15,10 @@ export const OptionsPanel = ({
   const { orderList } = useMyOrders();
   const { goToMyOrders, goToShop, goToCheckout, cleanStoreage } =
     useNavOptions();
+  useEffect(() => {
+    toggleModal();
+  }, [location]);
+
   return (
     <div>
       <div

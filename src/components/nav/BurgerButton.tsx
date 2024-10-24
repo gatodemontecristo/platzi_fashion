@@ -3,17 +3,17 @@ import { useState } from 'react';
 import { OptionsPanel } from './OptionsPanel';
 
 export const BurgerButton = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
+  const toggleMenu = (newState: boolean) => {
+    setIsOpen(newState);
   };
 
   return (
     <div className="relative block lg:hidden mt-4">
       {/* Ícono del menú burger */}
       <button
-        onClick={toggleMenu}
+        onClick={() => toggleMenu(true)}
         className="text-black focus:outline-none z-20"
       >
         {isOpen ? (

@@ -17,9 +17,9 @@ export const BurgerButton = () => {
         className="text-black focus:outline-none z-20"
       >
         {isOpen ? (
-          <XMarkIcon className="h-8 w-8 text-black" /> // Ícono de cerrar cuando está abierto
+          <XMarkIcon className="md:h-8 md:w-8 h-6 w-6 text-black" /> // Ícono de cerrar cuando está abierto
         ) : (
-          <Bars3Icon className="h-8 w-8 text-black" /> // Ícono del burger cuando está cerrado
+          <Bars3Icon className="md:h-8 md:w-8 h-6 w-6 text-black" /> // Ícono del burger cuando está cerrado
         )}
       </button>
 

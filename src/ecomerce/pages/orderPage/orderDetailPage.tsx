@@ -30,15 +30,17 @@ export const OrderDetailPage = () => {
         <ChevronLeftIcon className="h-6 w-6 transition-transform duration-300 ease-in-out group-hover:-translate-x-4"></ChevronLeftIcon>
         <p>Detail Order</p>
       </div>
-      <div className="flex flex-col items-center lg:w-1/4 w-1/2 gap-3">
+      <div className="flex flex-col items-center lg:w-1/4 md:w-1/2 w-3/4 gap-3">
         {collection?.shopOrderCollection.map((order) => (
           <ItemOrderCard key={nanoid()} {...{ order }}></ItemOrderCard>
         ))}
       </div>
-      <div className="flex flex-row justify-end p-0 border-t  border-gray-200 lg:w-1/4 w-1/2"></div>
-      <div className="flex flex-row  items-center lg:w-1/4 w-1/2 justify-between p-4">
-        <p className="text-gray-700 font-normal text-[24px]">Order Total :</p>
-        <p className="text-gray-700 font-normal text-[24px]">
+      <div className="flex flex-row justify-end p-0 border-t  border-gray-200 lg:w-1/4 md:w-1/2 w-3/4"></div>
+      <div className="flex flex-row  items-center lg:w-1/4 md:w-1/2 w-3/4 justify-between p-4">
+        <p className="text-gray-700 font-normal md:text-[24px] text-[20px]">
+          Order Total :
+        </p>
+        <p className="text-gray-700 font-normal md:text-[24px] text-[20px]">
           {priceFormat(collection?.total || 0)}
         </p>
       </div>

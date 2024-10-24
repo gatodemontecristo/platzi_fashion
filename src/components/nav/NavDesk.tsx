@@ -184,13 +184,13 @@ export const NavDesk = () => {
         {/* Modal que aparece debajo del botón */}
         <ShopCarOrder {...{ isModalOpen, toggleModal }}></ShopCarOrder>
       </div>
-      <div className="md:hidden flex flex-row w-full ">
+      <div className="md:hidden flex flex-row w-full mt-4">
         {location.pathname === '/shop' && (
-          <ul className="list-none flex  flex-row  gap-4 font-light text-lg	z-40 w-full md:flex-nowrap flex-wrap justify-center">
+          <ul className="list-none flex  flex-row  gap-4 font-light md:text-lg text-base leading-3	z-40 w-full md:flex-nowrap flex-wrap justify-center">
             {menuNavItems.map((item: menuNavItemsProps) => (
               <button
                 key={nanoid()}
-                className={`h-fi ${categoryValue === item.category && 'font-bold underline underline-offset-4'}`}
+                className={`h-fi  ${categoryValue === item.category && 'font-bold underline underline-offset-4 '}`}
                 onClick={() => handleCurrentCategory(item.category)}
               >
                 {item.tittle}

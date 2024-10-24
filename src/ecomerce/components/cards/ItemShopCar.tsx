@@ -21,23 +21,27 @@ export const ItemShopCar = ({
         }}
       ></img>
       <div className="flex flex-col w-2/5 justify-between p-2">
-        <p className="font-light text-[11px] uppercase">{item.title}</p>
-        <p className="font-light text-[13px] italic">
+        <p className="font-light md:text-[11px] text-[9px]  uppercase">
+          {item.title}
+        </p>
+        <p className="font-light md:text-[13px] text-[10px] italic">
           {' '}
           {item.category || ''}, {priceFormat(item.price)}
         </p>
 
-        <div className="flex flex-row items-center gap-2">
+        <div className="flex flex-row items-center md:gap-2 gap-0">
           <button
             onClick={() => onUpdateAmount(item, '+')}
-            className=" text-[15px] uppercase px-3 py-1 m-1 rounded-full	bg-gray-200 hover:bg-slate-800	 hover:text-white"
+            className=" md:text-[15px] text-[11px] uppercase px-3 py-1 m-1 rounded-full	bg-gray-200 hover:bg-slate-800	 hover:text-white"
           >
             +
           </button>
-          <p className=" font-light text-[14px] uppercase">{item.amount}</p>
+          <p className=" font-light md:text-[14px] text-[12px] uppercase">
+            {item.amount}
+          </p>
           <button
             onClick={() => onUpdateAmount(item, '-')}
-            className="text-[15px] uppercase px-3 py-1 m-1 rounded-full	bg-gray-200 hover:bg-slate-800	 hover:text-white"
+            className=" md:text-[15px] text-[11px] uppercase px-3 py-1 m-1 rounded-full	bg-gray-200 hover:bg-slate-800	 hover:text-white"
           >
             -
           </button>
@@ -46,7 +50,7 @@ export const ItemShopCar = ({
       <div className="w-1/5 flex flex-col justify-center items-center">
         <button
           onClick={() => onRemoveFunction(item.id)}
-          className="w-[25px]  border border-gray-500"
+          className="md:w-[25px] w-[20px]  border border-gray-500"
         >
           x
         </button>

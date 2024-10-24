@@ -1,7 +1,7 @@
 export const InfoSection03 = () => {
   return (
     <div className="flex lg:flex-row flex-col items-center justify-center lg:p-20 md:p-10 p-10 pt-0 z-10">
-      <div className="md:order-1 order-2 lg:w-[45%] w-full p-10 flex lg:flex-col md:flex-row flex-col gap-10">
+      <div className="md:order-1 order-2 lg:w-[45%] w-full md:p-10 p-5 flex lg:flex-col md:flex-row flex-col gap-10">
         <p className="md:text-lg text-base font-light">
           Fashion where creativity becomes couture trends define eras, and
           individuality reigns supreme, dive into a world, where every stitch

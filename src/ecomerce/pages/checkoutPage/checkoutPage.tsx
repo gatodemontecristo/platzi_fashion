@@ -79,10 +79,10 @@ export const CheckoutPage = () => {
   return (
     <>
       <div
-        className="flex flex-row mx-[10%]  gap-8 mb-20 "
+        className="flex flex-row md:mx-[10%] mx-[5%]  gap-8 mb-20 "
         style={{ paddingTop: `${menuHeight}px` }}
       >
-        <div className="flex flex-col gap-8 lg:w-[60%] w-full p-4">
+        <div className="flex flex-col gap-8 lg:w-[60%] w-full md:p-4 p-1">
           <div className="flex lg:hidden flex-col w-full gap-2">
             <div className="flex flex-row justify-end">
               <button

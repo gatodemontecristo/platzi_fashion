@@ -15,7 +15,7 @@ export const Pagination = ({
   handleCurrentPage,
 }: PaginationProps) => {
   return (
-    <div className="flex flex-row pagination mt-14">
+    <div className="flex flex-row pagination justify-center flex-wrap mt-14 mx-4 mb-10">
       <button onClick={handlePrevPage} disabled={currentPage === 1}>
         <ChevronLeftIcon className="h-6 w-6 fill-current" />
       </button>

@@ -17,7 +17,7 @@ export const OrderCard = ({ order }: orderCardProps) => {
 
   return (
     <div
-      className="group flex flex-row justify-center items-center gap-4 lg:w-1/4 w-1/2 border border-gray-700 rounded-lg p-4 animate__animated animate__fadeInLeft"
+      className="group flex flex-row justify-center items-center gap-4 lg:w-1/4 md:w-1/2 w-3/4 border border-gray-700 rounded-lg p-4 animate__animated animate__fadeInLeft"
       onClick={onNavigateOrderDetail}
     >
       <div className="flex flex-col w-2/5 gap-3">

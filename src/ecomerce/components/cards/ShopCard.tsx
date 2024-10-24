@@ -9,7 +9,7 @@ interface ShopCardProps {
 
 export const ShopCard = ({ card, setCardSelected, addItem }: ShopCardProps) => {
   return (
-    <div className="flex flex-col w-[20%] animate__animated animate__fadeInUp">
+    <div className="flex flex-col md:w-[20%] w-[30%] animate__animated animate__fadeInUp">
       <div className="relative">
         <a onClick={() => setCardSelected(card)}>
           <img
@@ -23,20 +23,24 @@ export const ShopCard = ({ card, setCardSelected, addItem }: ShopCardProps) => {
           />
         </a>
         <button
-          className="absolute bottom-8 left-1/2 rounded-full bg-white bg-opacity-40 p-1 hover:bg-white ransition-all duration-300"
+          className="absolute bottom-4 left-1/2 rounded-full bg-white bg-opacity-40 p-1 hover:bg-white ransition-all duration-300"
           onClick={() => addItem(card)}
         >
-          <PlusIcon className="w-4 h-4  font-bold text-gray-200 hover:text-black" />
+          <PlusIcon className="md:w-4 md:h-4 w-3 h-3 font-bold text-gray-200 hover:text-black" />
         </button>
       </div>
       <div className="flex flex-col">
         <div className="flex flex-row justify-between">
-          <p className="font-light text-[11px] uppercase">{card.title} </p>
+          <p className="font-light md:text-[11px] text-[9px] uppercase">
+            {card.title}{' '}
+          </p>
           <button className="m-1">
-            <BookmarkIcon className="w-4 h-4" />
+            <BookmarkIcon className="md:w-4 md:h-4 w-3 h-3" />
           </button>
         </div>
-        <p className="font-light text-[11px]">{priceFormat(card.price)}</p>
+        <p className="font-light md:text-[11px] text-[9px]">
+          {priceFormat(card.price)}
+        </p>
       </div>
     </div>
   );

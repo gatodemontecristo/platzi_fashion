@@ -23,10 +23,10 @@ export const OrderSummary = ({
   return (
     <div>
       <div
-        className={`fixed right-0 top-16  w-1/2 h-full p-4 shadow-lg bg-white border-gray-950 border-2   transform transition-transform duration-500 ease-in-out z-50
+        className={`fixed right-0 top-16  md:w-1/2 w-4/6 h-full md:p-4 p-2 shadow-lg bg-white border-gray-950 border-2   transform transition-transform duration-500 ease-in-out z-50
         ${isModalOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
-        <div className="flex flex-col gap-4 w-fullpy-4 pr-4 pl-8 border-l  border-gray-200 ">
+        <div className="flex flex-col gap-4 w-full py-4 md:pr-4 md:pl-4 pr-2 pl-2 ">
           <p>Order Summary</p>
           {shopCardOrder.length === 0 ? (
             <p className="text-center italic font-light my-3">

@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 
 interface OptionsPanelProps {
   isModalOpen: boolean;
-  toggleModal: () => void;
+  toggleModal: (newState: boolean) => void;
 }
 export const OptionsPanel = ({
   isModalOpen,
@@ -16,7 +16,7 @@ export const OptionsPanel = ({
   const { goToMyOrders, goToShop, goToCheckout, cleanStoreage } =
     useNavOptions();
   useEffect(() => {
-    toggleModal();
+    toggleModal(false);
   }, [location]);
 
   return (
@@ -63,7 +63,7 @@ export const OptionsPanel = ({
       {isModalOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40"
-          onClick={toggleModal} // Cerrar el modal al hacer clic fuera
+          onClick={() => toggleModal(false)} // Cerrar el modal al hacer clic fuera
         ></div>
       )}
     </div>

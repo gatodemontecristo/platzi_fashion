@@ -1,6 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import { useMyOrders } from '../../stores';
 import { useNavOptions } from '../../hooks';
+import { useEffect } from 'react';
 
 interface OptionsPanelProps {
   isModalOpen: boolean;
@@ -14,10 +15,14 @@ export const OptionsPanel = ({
   const { orderList } = useMyOrders();
   const { goToMyOrders, goToShop, goToCheckout, cleanStoreage } =
     useNavOptions();
+  useEffect(() => {
+    toggleModal();
+  }, [location]);
+
   return (
     <div>
       <div
-        className={`fixed right-0 top-16 w-1/3 h-full p-4 shadow-lg bg-white border-gray-950 border-2   transform transition-transform duration-500 ease-in-out z-50
+        className={`fixed right-0 top-16 md:w-1/3 w-1/2 h-full p-4 shadow-lg bg-white border-gray-950 border-2   transform transition-transform duration-500 ease-in-out z-50
           ${isModalOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
         <div className="flex flex-col gap-4 justify-end text-end">
